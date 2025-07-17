@@ -1,0 +1,192 @@
+﻿STRING 1
+{
+Player 1
+}
+
+STRING 3
+{
+Gunship
+}
+
+STRING 4
+{
+1-4
+}
+
+STRING 5
+{
+Barade
+}
+
+STRING 6
+{
+Player 2
+}
+
+STRING 7
+{
+Player 3
+}
+
+STRING 8
+{
+Player 4
+}
+
+STRING 14
+// Units: n000 (Marker), Name (Name)
+{
+Marker
+}
+
+STRING 24
+// Units: H000 (40mm), Name (Name)
+{
+40mm
+}
+
+STRING 25
+// Units: H002 (105 mm howitzer), Name (Name)
+{
+105 mm howitzer
+}
+
+STRING 26
+// Units: n001 (Target), Name (Name)
+{
+Target
+}
+
+STRING 27
+{
+Defeat!
+}
+
+STRING 28
+{
+Air Force
+}
+
+STRING 29
+{
+Ground Force
+}
+
+STRING 30
+{
+Defeat!
+}
+
+STRING 31
+{
+Victory Ground Forces:
+}
+
+STRING 32
+// Units: H003 (Commander), Name (Name)
+{
+Commander
+}
+
+STRING 33
+// Units: H004 (Flame Cannon), Name (Name)
+{
+Flame Cannon
+}
+
+STRING 34
+{
+Escape the Gunships until reinforcements arrive!
+}
+
+STRING 35
+{
+You quit!
+}
+
+STRING 39
+{
+Air Force: Destroy all ground forces before the time expires.
+Ground Force: Hide and survive the air attacks until the time expires.
+}
+
+STRING 40
+{
+Quit?
+}
+
+STRING 42
+{
+Yes
+}
+
+STRING 43
+{
+No
+}
+
+STRING 45
+{
+You quit!
+}
+
+STRING 49
+// Units: H001 (Minigun (2 seconds fire delay)), Name (Name)
+{
+Minigun (2 seconds fire delay)
+}
+
+STRING 52
+{
+Gunships
+}
+
+STRING 55
+{
+Left Mouse:
+}
+
+STRING 56
+{
+Right Mouse:
+}
+
+STRING 57
+{
+Fire
+}
+
+STRING 58
+{
+Change Weapon
+}
+
+STRING 60
+// Units: H000 (40mm), Propernames (Proper Names)
+{
+Gunship
+}
+
+STRING 61
+// Units: H001 (Minigun (2 seconds fire delay)), Propernames (Proper Names)
+{
+Gunship
+}
+
+STRING 62
+// Units: H002 (105 mm howitzer), Propernames (Proper Names)
+{
+Gunship
+}
+
+STRING 63
+// Units: H004 (Flame Cannon), Propernames (Proper Names)
+{
+Gunship
+}
+
+STRING 64
+{
+-
+}
+
