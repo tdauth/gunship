@@ -25,25 +25,25 @@ constant boolean LIBRARY_TimerUtils=true
         //  * THE LEAST SAFE ( you may have to tweak OFSSET manually for it to
         //                     work)
         //
-constant boolean TimerUtils__USE_HASH_TABLE= false
-constant boolean TimerUtils__USE_FLEXIBLE_OFFSET= false
+constant boolean TimerUtils___USE_HASH_TABLE= false
+constant boolean TimerUtils___USE_FLEXIBLE_OFFSET= false
 
-constant integer TimerUtils__OFFSET= 0x100000
-integer TimerUtils__VOFFSET= TimerUtils__OFFSET
+constant integer TimerUtils___OFFSET= 0x100000
+integer TimerUtils___VOFFSET= TimerUtils___OFFSET
               
         //Timers to preload at map init:
-constant integer TimerUtils__QUANTITY= 256
+constant integer TimerUtils___QUANTITY= 256
         
         //Changing this  to something big will allow you to keep recycling
         // timers even when there are already AN INCREDIBLE AMOUNT of timers in
         // the stack. But it will make things far slower so that's probably a bad idea...
-constant integer TimerUtils__ARRAY_SIZE= 8190
+constant integer TimerUtils___ARRAY_SIZE= 8190
 
-// processed:         integer array TimerUtils__data[TimerUtils__ARRAY_SIZE]
-hashtable TimerUtils__ht
-// processed:         timer array TimerUtils__tT[TimerUtils__ARRAY_SIZE]
-integer TimerUtils__tN= 0
-constant integer TimerUtils__HELD=0x28829022
+// processed:         integer array TimerUtils___data[TimerUtils___ARRAY_SIZE]
+hashtable TimerUtils___ht
+// processed:         timer array TimerUtils___tT[TimerUtils___ARRAY_SIZE]
+integer TimerUtils___tN= 0
+constant integer TimerUtils___HELD=0x28829022
         //use a totally random number here, the more improbable someone uses it, the better.
 //endglobals from TimerUtils
 //globals from CameraPosSync:
@@ -59,24 +59,24 @@ real array cameraTargetY
 real array cameraTargetZ
 real array cameraDistance
     
-trigger CameraPosSync__syncTrigger= CreateTrigger()
+trigger CameraPosSync___syncTrigger= CreateTrigger()
 //endglobals from CameraPosSync
 //globals from SoundUtils:
 constant boolean LIBRARY_SoundUtils=true
-hashtable SoundUtils__ht= InitHashtable()
-hashtable SoundUtils__st= InitHashtable()
-hashtable SoundUtils__rt= InitHashtable()
-hashtable SoundUtils__kt= InitHashtable()
+hashtable SoundUtils___ht= InitHashtable()
+hashtable SoundUtils___st= InitHashtable()
+hashtable SoundUtils___rt= InitHashtable()
+hashtable SoundUtils___kt= InitHashtable()
 //endglobals from SoundUtils
 //globals from Gunship:
 constant boolean LIBRARY_Gunship=true
-hashtable Gunship__h= InitHashtable()
-timer array Gunship__rotationTimer
-trigger Gunship__zoomInTrigger= CreateTrigger()
-trigger Gunship__zoomOutTrigger= CreateTrigger()
-trigger Gunship__speedUpTrigger= CreateTrigger()
-trigger Gunship__speedDownTrigger= CreateTrigger()
-trigger Gunship__nightVisionTrigger= CreateTrigger()
+hashtable Gunship___h= InitHashtable()
+timer array Gunship___rotationTimer
+trigger Gunship___zoomInTrigger= CreateTrigger()
+trigger Gunship___zoomOutTrigger= CreateTrigger()
+trigger Gunship___speedUpTrigger= CreateTrigger()
+trigger Gunship___speedDownTrigger= CreateTrigger()
+trigger Gunship___nightVisionTrigger= CreateTrigger()
 //endglobals from Gunship
     // User-defined
 unit array udg_Gunship
@@ -121,14 +121,15 @@ trigger gg_trg_Escape_Quit= null
 trigger gg_trg_Escape_Quit_Yes= null
 trigger gg_trg_Change_Target= null
 trigger gg_trg_Victory_Air_Force= null
-trigger gg_trg_Victory_Ground_Force= null
+trigger gg_trg_Victory_Ground_Force_Time= null
 unit gg_unit_H000_0004= null
 unit gg_unit_n000_0003= null
 unit gg_unit_n001_0096= null
 unit gg_unit_H000_0097= null
 unit gg_unit_n001_0098= null
-unit gg_unit_H003_0112= null
 unit gg_unit_H003_0111= null
+unit gg_unit_H003_0112= null
+trigger gg_trg_Victory_Ground_Force_Kill= null
 integer SOUND_MACHINEGUN
 
 trigger l__library_init
@@ -144,31 +145,31 @@ integer array s__Stack_top
 integer s__Stack_free= 1
 integer array s__Stack_next
 integer array s__Stack_value
-constant integer si__SoundUtils__soundhelper=2
-integer si__SoundUtils__soundhelper_F=0
-integer si__SoundUtils__soundhelper_I=0
-integer array si__SoundUtils__soundhelper_V
-integer array s__SoundUtils__soundhelper_sta
-string array s__SoundUtils__soundhelper_fileName
-integer array s__SoundUtils__soundhelper_duration
-boolean array s__SoundUtils__soundhelper_looping
-boolean array s__SoundUtils__soundhelper_is3D
-boolean array s__SoundUtils__soundhelper_stopwhenoutofrange
-integer array s__SoundUtils__soundhelper_fadeInRate
-integer array s__SoundUtils__soundhelper_fadeOutRate
-string array s__SoundUtils__soundhelper_eaxSetting
-constant integer si__SoundUtils__soundrecycler=3
-integer si__SoundUtils__soundrecycler_F=0
-integer si__SoundUtils__soundrecycler_I=0
-integer array si__SoundUtils__soundrecycler_V
-timer array s__SoundUtils__soundrecycler_t
-sound array s__SoundUtils__soundrecycler_s
-integer array s__SoundUtils__soundrecycler_sh
-boolean array s__SoundUtils__soundrecycler_stopped
-integer array s__TimerUtils__data
-timer array s__TimerUtils__tT
+constant integer si__SoundUtils___soundhelper=2
+integer si__SoundUtils___soundhelper_F=0
+integer si__SoundUtils___soundhelper_I=0
+integer array si__SoundUtils___soundhelper_V
+integer array s__SoundUtils___soundhelper_sta
+string array s__SoundUtils___soundhelper_fileName
+integer array s__SoundUtils___soundhelper_duration
+boolean array s__SoundUtils___soundhelper_looping
+boolean array s__SoundUtils___soundhelper_is3D
+boolean array s__SoundUtils___soundhelper_stopwhenoutofrange
+integer array s__SoundUtils___soundhelper_fadeInRate
+integer array s__SoundUtils___soundhelper_fadeOutRate
+string array s__SoundUtils___soundhelper_eaxSetting
+constant integer si__SoundUtils___soundrecycler=3
+integer si__SoundUtils___soundrecycler_F=0
+integer si__SoundUtils___soundrecycler_I=0
+integer array si__SoundUtils___soundrecycler_V
+timer array s__SoundUtils___soundrecycler_t
+sound array s__SoundUtils___soundrecycler_s
+integer array s__SoundUtils___soundrecycler_sh
+boolean array s__SoundUtils___soundrecycler_stopped
+integer array s__TimerUtils___data
+timer array s__TimerUtils___tT
 trigger st__Stack_onDestroy
-trigger st__SoundUtils__soundrecycler_onDestroy
+trigger st__SoundUtils___soundrecycler_onDestroy
 trigger array st___prototype11
 trigger array st___prototype32
 integer f__arg_integer1
@@ -228,80 +229,80 @@ function sc__Stack_deallocate takes integer this returns nothing
     set si__Stack_F=this
 endfunction
 
-//Generated method caller for SoundUtils__soundrecycler.onDestroy
-function sc__SoundUtils__soundrecycler_onDestroy takes integer this returns nothing
+//Generated method caller for SoundUtils___soundrecycler.onDestroy
+function sc__SoundUtils___soundrecycler_onDestroy takes integer this returns nothing
     set f__arg_this=this
-    call TriggerEvaluate(st__SoundUtils__soundrecycler_onDestroy)
+    call TriggerEvaluate(st__SoundUtils___soundrecycler_onDestroy)
 endfunction
 
-//Generated allocator of SoundUtils__soundrecycler
-function s__SoundUtils__soundrecycler__allocate takes nothing returns integer
- local integer this=si__SoundUtils__soundrecycler_F
+//Generated allocator of SoundUtils___soundrecycler
+function s__SoundUtils___soundrecycler__allocate takes nothing returns integer
+ local integer this=si__SoundUtils___soundrecycler_F
     if (this!=0) then
-        set si__SoundUtils__soundrecycler_F=si__SoundUtils__soundrecycler_V[this]
+        set si__SoundUtils___soundrecycler_F=si__SoundUtils___soundrecycler_V[this]
     else
-        set si__SoundUtils__soundrecycler_I=si__SoundUtils__soundrecycler_I+1
-        set this=si__SoundUtils__soundrecycler_I
+        set si__SoundUtils___soundrecycler_I=si__SoundUtils___soundrecycler_I+1
+        set this=si__SoundUtils___soundrecycler_I
     endif
     if (this>8190) then
         return 0
     endif
 
-   set s__SoundUtils__soundrecycler_t[this]= null
-   set s__SoundUtils__soundrecycler_s[this]= null
-   set s__SoundUtils__soundrecycler_sh[this]= 0
-   set s__SoundUtils__soundrecycler_stopped[this]= false
-    set si__SoundUtils__soundrecycler_V[this]=-1
+   set s__SoundUtils___soundrecycler_t[this]= null
+   set s__SoundUtils___soundrecycler_s[this]= null
+   set s__SoundUtils___soundrecycler_sh[this]= 0
+   set s__SoundUtils___soundrecycler_stopped[this]= false
+    set si__SoundUtils___soundrecycler_V[this]=-1
  return this
 endfunction
 
-//Generated destructor of SoundUtils__soundrecycler
-function sc__SoundUtils__soundrecycler_deallocate takes integer this returns nothing
+//Generated destructor of SoundUtils___soundrecycler
+function sc__SoundUtils___soundrecycler_deallocate takes integer this returns nothing
     if this==null then
         return
-    elseif (si__SoundUtils__soundrecycler_V[this]!=-1) then
+    elseif (si__SoundUtils___soundrecycler_V[this]!=-1) then
         return
     endif
     set f__arg_this=this
-    call TriggerEvaluate(st__SoundUtils__soundrecycler_onDestroy)
-    set si__SoundUtils__soundrecycler_V[this]=si__SoundUtils__soundrecycler_F
-    set si__SoundUtils__soundrecycler_F=this
+    call TriggerEvaluate(st__SoundUtils___soundrecycler_onDestroy)
+    set si__SoundUtils___soundrecycler_V[this]=si__SoundUtils___soundrecycler_F
+    set si__SoundUtils___soundrecycler_F=this
 endfunction
 
-//Generated allocator of SoundUtils__soundhelper
-function s__SoundUtils__soundhelper__allocate takes nothing returns integer
- local integer this=si__SoundUtils__soundhelper_F
+//Generated allocator of SoundUtils___soundhelper
+function s__SoundUtils___soundhelper__allocate takes nothing returns integer
+ local integer this=si__SoundUtils___soundhelper_F
     if (this!=0) then
-        set si__SoundUtils__soundhelper_F=si__SoundUtils__soundhelper_V[this]
+        set si__SoundUtils___soundhelper_F=si__SoundUtils___soundhelper_V[this]
     else
-        set si__SoundUtils__soundhelper_I=si__SoundUtils__soundhelper_I+1
-        set this=si__SoundUtils__soundhelper_I
+        set si__SoundUtils___soundhelper_I=si__SoundUtils___soundhelper_I+1
+        set this=si__SoundUtils___soundhelper_I
     endif
     if (this>8190) then
         return 0
     endif
 
-   set s__SoundUtils__soundhelper_fileName[this]= ""
-   set s__SoundUtils__soundhelper_duration[this]= 0
-   set s__SoundUtils__soundhelper_looping[this]= false
-   set s__SoundUtils__soundhelper_is3D[this]= false
-   set s__SoundUtils__soundhelper_stopwhenoutofrange[this]= false
-   set s__SoundUtils__soundhelper_fadeInRate[this]= 0
-   set s__SoundUtils__soundhelper_fadeOutRate[this]= 0
-   set s__SoundUtils__soundhelper_eaxSetting[this]= ""
-    set si__SoundUtils__soundhelper_V[this]=-1
+   set s__SoundUtils___soundhelper_fileName[this]= ""
+   set s__SoundUtils___soundhelper_duration[this]= 0
+   set s__SoundUtils___soundhelper_looping[this]= false
+   set s__SoundUtils___soundhelper_is3D[this]= false
+   set s__SoundUtils___soundhelper_stopwhenoutofrange[this]= false
+   set s__SoundUtils___soundhelper_fadeInRate[this]= 0
+   set s__SoundUtils___soundhelper_fadeOutRate[this]= 0
+   set s__SoundUtils___soundhelper_eaxSetting[this]= ""
+    set si__SoundUtils___soundhelper_V[this]=-1
  return this
 endfunction
 
-//Generated destructor of SoundUtils__soundhelper
-function s__SoundUtils__soundhelper_deallocate takes integer this returns nothing
+//Generated destructor of SoundUtils___soundhelper
+function s__SoundUtils___soundhelper_deallocate takes integer this returns nothing
     if this==null then
         return
-    elseif (si__SoundUtils__soundhelper_V[this]!=-1) then
+    elseif (si__SoundUtils___soundhelper_V[this]!=-1) then
         return
     endif
-    set si__SoundUtils__soundhelper_V[this]=si__SoundUtils__soundhelper_F
-    set si__SoundUtils__soundhelper_F=this
+    set si__SoundUtils___soundhelper_V[this]=si__SoundUtils___soundhelper_F
+    set si__SoundUtils___soundhelper_F=this
 endfunction
 function sc___prototype11_execute takes integer i,integer a1 returns nothing
     set f__arg_integer1=a1
@@ -330,7 +331,7 @@ function sc___prototype32_evaluate takes integer i,sound a1,boolean a2,boolean a
 
 endfunction
 function h__StopSound takes sound a0, boolean a1, boolean a2 returns nothing
-    //hook: SoundUtils__HookStopSound
+    //hook: SoundUtils___HookStopSound
     call sc___prototype32_evaluate(1,a0,a1,a2)
 call StopSound(a0,a1,a2)
 endfunction
@@ -1093,7 +1094,7 @@ endfunction
 
 
 
-            set s__TimerUtils__data[GetHandleId(t) - TimerUtils__OFFSET]= value
+            set s__TimerUtils___data[GetHandleId(t) - TimerUtils___OFFSET]= value
 
     endfunction
 
@@ -1117,7 +1118,7 @@ endfunction
 
 
 
-            return s__TimerUtils__data[GetHandleId(t) - TimerUtils__OFFSET]
+            return s__TimerUtils___data[GetHandleId(t) - TimerUtils___OFFSET]
 
     endfunction
 
@@ -1125,11 +1126,11 @@ endfunction
 
     //==========================================================================================
     function NewTimer takes nothing returns timer
-        if ( TimerUtils__tN == 0 ) then
+        if ( TimerUtils___tN == 0 ) then
             //If this happens then the QUANTITY rule has already been broken, try to fix the
             // issue, else fail.
 
-                set s__TimerUtils__tT[0]= CreateTimer()
+                set s__TimerUtils___tT[0]= CreateTimer()
 
 
 
@@ -1137,7 +1138,7 @@ endfunction
 
 
 
-                    if ( GetHandleId(s__TimerUtils__tT[0]) - TimerUtils__OFFSET < 0 ) or ( GetHandleId(s__TimerUtils__tT[0]) - TimerUtils__OFFSET >= TimerUtils__ARRAY_SIZE ) then
+                    if ( GetHandleId(s__TimerUtils___tT[0]) - TimerUtils___OFFSET < 0 ) or ( GetHandleId(s__TimerUtils___tT[0]) - TimerUtils___OFFSET >= TimerUtils___ARRAY_SIZE ) then
                         //all right, couldn't fix it
                         call BJDebugMsg("NewTimer: Unable to allocate a timer, you should probably set TimerUtils_USE_HASH_TABLE to true or fix timer leaks.")
                         return null
@@ -1145,10 +1146,10 @@ endfunction
 
 
         else
-            set TimerUtils__tN=TimerUtils__tN - 1
+            set TimerUtils___tN=TimerUtils___tN - 1
         endif
-        set s__TimerUtils__data[GetHandleId((s__TimerUtils__tT[TimerUtils__tN] )) - TimerUtils__OFFSET]= ( 0) // INLINED!!
-     return s__TimerUtils__tT[TimerUtils__tN]
+        set s__TimerUtils___data[GetHandleId((s__TimerUtils___tT[TimerUtils___tN] )) - TimerUtils___OFFSET]= ( 0) // INLINED!!
+     return s__TimerUtils___tT[TimerUtils___tN]
     endfunction
 
     //==========================================================================================
@@ -1156,21 +1157,21 @@ endfunction
         if ( t == null ) then
             return
         endif
-        if ( TimerUtils__tN == TimerUtils__ARRAY_SIZE ) then
+        if ( TimerUtils___tN == TimerUtils___ARRAY_SIZE ) then
             //stack is full, the map already has much more troubles than the chance of bug
             call DestroyTimer(t)
         else
             call PauseTimer(t)
-            if ( (s__TimerUtils__data[GetHandleId((t)) - TimerUtils__OFFSET]) == TimerUtils__HELD ) then // INLINED!!
+            if ( (s__TimerUtils___data[GetHandleId((t)) - TimerUtils___OFFSET]) == TimerUtils___HELD ) then // INLINED!!
                 return
             endif
-            set s__TimerUtils__data[GetHandleId((t )) - TimerUtils__OFFSET]= ( TimerUtils__HELD) // INLINED!!
-            set s__TimerUtils__tT[TimerUtils__tN]= t
-            set TimerUtils__tN=TimerUtils__tN + 1
+            set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___OFFSET]= ( TimerUtils___HELD) // INLINED!!
+            set s__TimerUtils___tT[TimerUtils___tN]= t
+            set TimerUtils___tN=TimerUtils___tN + 1
         endif
     endfunction
 
-    function TimerUtils__init takes nothing returns nothing
+    function TimerUtils___init takes nothing returns nothing
      local integer i=0
      local integer o=- 1
      local boolean oops= false
@@ -1188,27 +1189,27 @@ endfunction
             loop
                 set i=0
                 loop
-                    exitwhen ( i == TimerUtils__QUANTITY )
-                    set s__TimerUtils__tT[i]= CreateTimer()
+                    exitwhen ( i == TimerUtils___QUANTITY )
+                    set s__TimerUtils___tT[i]= CreateTimer()
                     if ( i == 0 ) then
-                        set TimerUtils__VOFFSET=GetHandleId(s__TimerUtils__tT[i])
+                        set TimerUtils___VOFFSET=GetHandleId(s__TimerUtils___tT[i])
 
 
 
-                            set o=TimerUtils__OFFSET
+                            set o=TimerUtils___OFFSET
 
                     endif
-                    if ( GetHandleId(s__TimerUtils__tT[i]) - o >= TimerUtils__ARRAY_SIZE ) then
+                    if ( GetHandleId(s__TimerUtils___tT[i]) - o >= TimerUtils___ARRAY_SIZE ) then
                         exitwhen true
                     endif
-                    if ( GetHandleId(s__TimerUtils__tT[i]) - o >= 0 ) then
+                    if ( GetHandleId(s__TimerUtils___tT[i]) - o >= 0 ) then
                         set i=i + 1
                     endif
                 endloop
-                set TimerUtils__tN=i
-                exitwhen ( TimerUtils__tN == TimerUtils__QUANTITY )
+                set TimerUtils___tN=i
+                exitwhen ( TimerUtils___tN == TimerUtils___QUANTITY )
                 set oops=true
-                exitwhen not TimerUtils__USE_FLEXIBLE_OFFSET
+                exitwhen not TimerUtils___USE_FLEXIBLE_OFFSET
             endloop
             
             if ( oops ) then
@@ -1233,11 +1234,11 @@ endfunction
 //library CameraPosSync:
 
 
-function CameraPosSync__RegisterSyncEventEnum takes nothing returns nothing
-    call BlzTriggerRegisterPlayerSyncEvent(CameraPosSync__syncTrigger, GetEnumPlayer(), CameraPosSync_PREFIX, false)
+function CameraPosSync___RegisterSyncEventEnum takes nothing returns nothing
+    call BlzTriggerRegisterPlayerSyncEvent(CameraPosSync___syncTrigger, GetEnumPlayer(), CameraPosSync_PREFIX, false)
 endfunction
 
-function CameraPosSync__TriggerActionSync takes nothing returns nothing
+function CameraPosSync___TriggerActionSync takes nothing returns nothing
     local string data= BlzGetTriggerSyncData()
     local integer playerId= GetPlayerId(GetTriggerPlayer())
     if ( StringStartsWith(data , "SourceX_") ) then
@@ -1257,7 +1258,7 @@ function CameraPosSync__TriggerActionSync takes nothing returns nothing
     endif
 endfunction
 
-function CameraPosSync__SyncEnum takes nothing returns nothing
+function CameraPosSync___SyncEnum takes nothing returns nothing
     if ( GetLocalPlayer() == GetEnumPlayer() ) then
         call BlzSendSyncData(CameraPosSync_PREFIX, "SourceX_" + R2S(GetCameraEyePositionX()))
         call BlzSendSyncData(CameraPosSync_PREFIX, "SourceY_" + R2S(GetCameraEyePositionY()))
@@ -1269,14 +1270,14 @@ function CameraPosSync__SyncEnum takes nothing returns nothing
     endif
 endfunction
 
-function CameraPosSync__TimerFunctionSync takes nothing returns nothing
-    call ForForce(GetPlayersAll(), function CameraPosSync__SyncEnum)
+function CameraPosSync___TimerFunctionSync takes nothing returns nothing
+    call ForForce(GetPlayersAll(), function CameraPosSync___SyncEnum)
 endfunction
 
-function CameraPosSync__Init takes nothing returns nothing
-    call ForForce(GetPlayersAll(), function CameraPosSync__RegisterSyncEventEnum)
-    call TriggerAddAction(CameraPosSync__syncTrigger, function CameraPosSync__TriggerActionSync)
-    call TimerStart(CreateTimer(), CameraPosSync_SYNC_INTERVAL, true, function CameraPosSync__TimerFunctionSync)
+function CameraPosSync___Init takes nothing returns nothing
+    call ForForce(GetPlayersAll(), function CameraPosSync___RegisterSyncEventEnum)
+    call TriggerAddAction(CameraPosSync___syncTrigger, function CameraPosSync___TriggerActionSync)
+    call TimerStart(CreateTimer(), CameraPosSync_SYNC_INTERVAL, true, function CameraPosSync___TimerFunctionSync)
 endfunction
 
 
@@ -1384,73 +1385,73 @@ endfunction
     
     //Sound Settings for this sound type
     
-    function s__SoundUtils__soundhelper_create takes string fileName,integer duration,boolean looping,boolean is3D,boolean stopwhenoutofrange,integer fadeInRate,integer fadeOutRate,string eaxSetting returns integer
-        local integer sh= s__SoundUtils__soundhelper__allocate()
+    function s__SoundUtils___soundhelper_create takes string fileName,integer duration,boolean looping,boolean is3D,boolean stopwhenoutofrange,integer fadeInRate,integer fadeOutRate,string eaxSetting returns integer
+        local integer sh= s__SoundUtils___soundhelper__allocate()
         //Load the parameters so the sound can be created later as necessary
-        set s__SoundUtils__soundhelper_fileName[sh]=fileName
-        set s__SoundUtils__soundhelper_duration[sh]=duration
-        set s__SoundUtils__soundhelper_looping[sh]=looping
-        set s__SoundUtils__soundhelper_is3D[sh]=is3D
-        set s__SoundUtils__soundhelper_stopwhenoutofrange[sh]=stopwhenoutofrange
-        set s__SoundUtils__soundhelper_fadeInRate[sh]=fadeInRate
-        set s__SoundUtils__soundhelper_fadeOutRate[sh]=fadeOutRate
-        set s__SoundUtils__soundhelper_eaxSetting[sh]=eaxSetting
+        set s__SoundUtils___soundhelper_fileName[sh]=fileName
+        set s__SoundUtils___soundhelper_duration[sh]=duration
+        set s__SoundUtils___soundhelper_looping[sh]=looping
+        set s__SoundUtils___soundhelper_is3D[sh]=is3D
+        set s__SoundUtils___soundhelper_stopwhenoutofrange[sh]=stopwhenoutofrange
+        set s__SoundUtils___soundhelper_fadeInRate[sh]=fadeInRate
+        set s__SoundUtils___soundhelper_fadeOutRate[sh]=fadeOutRate
+        set s__SoundUtils___soundhelper_eaxSetting[sh]=eaxSetting
         //Create the stack for the struct
-        set s__SoundUtils__soundhelper_sta[sh]=s__Stack__allocate()
+        set s__SoundUtils___soundhelper_sta[sh]=s__Stack__allocate()
         return sh
     endfunction
 
 //Struct for holding data for the sound recycling
     
-    function s__SoundUtils__soundrecycler_create takes sound whichSound,integer soundRef returns integer
-        local integer sr= s__SoundUtils__soundrecycler__allocate()
-        set s__SoundUtils__soundrecycler_t[sr]=NewTimer()
-        set s__SoundUtils__soundrecycler_s[sr]=whichSound
-        set s__SoundUtils__soundrecycler_sh[sr]=soundRef
-        set s__TimerUtils__data[GetHandleId((s__SoundUtils__soundrecycler_t[sr] )) - TimerUtils__OFFSET]= ( (sr)) // INLINED!!
+    function s__SoundUtils___soundrecycler_create takes sound whichSound,integer soundRef returns integer
+        local integer sr= s__SoundUtils___soundrecycler__allocate()
+        set s__SoundUtils___soundrecycler_t[sr]=NewTimer()
+        set s__SoundUtils___soundrecycler_s[sr]=whichSound
+        set s__SoundUtils___soundrecycler_sh[sr]=soundRef
+        set s__TimerUtils___data[GetHandleId((s__SoundUtils___soundrecycler_t[sr] )) - TimerUtils___OFFSET]= ( (sr)) // INLINED!!
         
         //Hook the value to the soundRef and whichSound
-        call SaveInteger(SoundUtils__rt, soundRef, GetHandleId(whichSound), (sr))
+        call SaveInteger(SoundUtils___rt, soundRef, GetHandleId(whichSound), (sr))
         return sr
     endfunction
-    function s__SoundUtils__soundrecycler_onDestroy takes integer this returns nothing
-        call RemoveSavedInteger(SoundUtils__rt, s__SoundUtils__soundrecycler_sh[this], GetHandleId(s__SoundUtils__soundrecycler_s[this]))
-        call ReleaseTimer(s__SoundUtils__soundrecycler_t[this])
+    function s__SoundUtils___soundrecycler_onDestroy takes integer this returns nothing
+        call RemoveSavedInteger(SoundUtils___rt, s__SoundUtils___soundrecycler_sh[this], GetHandleId(s__SoundUtils___soundrecycler_s[this]))
+        call ReleaseTimer(s__SoundUtils___soundrecycler_t[this])
     endfunction
 
-//Generated destructor of SoundUtils__soundrecycler
-function s__SoundUtils__soundrecycler_deallocate takes integer this returns nothing
+//Generated destructor of SoundUtils___soundrecycler
+function s__SoundUtils___soundrecycler_deallocate takes integer this returns nothing
     if this==null then
         return
-    elseif (si__SoundUtils__soundrecycler_V[this]!=-1) then
+    elseif (si__SoundUtils___soundrecycler_V[this]!=-1) then
         return
     endif
-    call s__SoundUtils__soundrecycler_onDestroy(this)
-    set si__SoundUtils__soundrecycler_V[this]=si__SoundUtils__soundrecycler_F
-    set si__SoundUtils__soundrecycler_F=this
+    call s__SoundUtils___soundrecycler_onDestroy(this)
+    set si__SoundUtils___soundrecycler_V[this]=si__SoundUtils___soundrecycler_F
+    set si__SoundUtils___soundrecycler_F=this
 endfunction
 
 //******************************************************************************
 
-function SoundUtils__HookStopSound takes sound soundHandle,boolean killWhenDone,boolean fadeOut returns nothing
+function SoundUtils___HookStopSound takes sound soundHandle,boolean killWhenDone,boolean fadeOut returns nothing
     local integer id= GetHandleId(soundHandle)
     local integer soundRef= 0
     local integer sr= 0
-    if HaveSavedInteger(SoundUtils__ht, 0, id) then //Sound is from stacks
-        set soundRef=LoadInteger(SoundUtils__ht, 0, id)
-        if HaveSavedInteger(SoundUtils__rt, soundRef, id) then //Sound has a recycler
-            set sr=(LoadInteger(SoundUtils__rt, soundRef, id))
-            set s__SoundUtils__soundrecycler_stopped[sr]=true
+    if HaveSavedInteger(SoundUtils___ht, 0, id) then //Sound is from stacks
+        set soundRef=LoadInteger(SoundUtils___ht, 0, id)
+        if HaveSavedInteger(SoundUtils___rt, soundRef, id) then //Sound has a recycler
+            set sr=(LoadInteger(SoundUtils___rt, soundRef, id))
+            set s__SoundUtils___soundrecycler_stopped[sr]=true
         endif
         if killWhenDone then
         endif
     endif
 endfunction
 
-//processed hook: hook StopSound SoundUtils__HookStopSound
+//processed hook: hook StopSound SoundUtils___HookStopSound
 
-function SoundUtils__HookKillSoundWhenDone takes sound soundHandle returns nothing
-    if HaveSavedInteger(SoundUtils__ht, 0, GetHandleId(soundHandle)) then
+function SoundUtils___HookKillSoundWhenDone takes sound soundHandle returns nothing
+    if HaveSavedInteger(SoundUtils___ht, 0, GetHandleId(soundHandle)) then
         call BJDebugMsg("SoundUtils_Warning: (KillSoundWhenDone) Destroying a sound in the stack")
     endif
 endfunction
@@ -1458,10 +1459,10 @@ endfunction
 //******************************************************************************
 
 function DefineSoundEx takes string fileName,integer duration,boolean looping,boolean is3D,boolean stopwhenoutofrange,integer fadeInRate,integer fadeOutRate,string eaxSetting returns integer
-    return (s__SoundUtils__soundhelper_create(fileName , duration , looping , is3D , stopwhenoutofrange , fadeInRate , fadeOutRate , eaxSetting))
+    return (s__SoundUtils___soundhelper_create(fileName , duration , looping , is3D , stopwhenoutofrange , fadeInRate , fadeOutRate , eaxSetting))
 endfunction
 function DefineSound takes string fileName,integer duration,boolean looping,boolean is3D returns integer
-    return (s__SoundUtils__soundhelper_create((fileName ) , ( duration ) , ( looping ) , ( is3D ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
+    return (s__SoundUtils___soundhelper_create((fileName ) , ( duration ) , ( looping ) , ( is3D ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
 endfunction
 
 function ReleaseSound takes sound s returns boolean
@@ -1472,46 +1473,46 @@ function ReleaseSound takes sound s returns boolean
     
     if s == null then
         return false
-    elseif not HaveSavedInteger(SoundUtils__ht, 0, id) then
+    elseif not HaveSavedInteger(SoundUtils___ht, 0, id) then
         return false
     endif
     
-    set soundRef=LoadInteger(SoundUtils__ht, 0, id)
+    set soundRef=LoadInteger(SoundUtils___ht, 0, id)
     set sh=(soundRef)
     
     call h__StopSound(s, false, true) //Stop the sound
-    call s__Stack_push(s__SoundUtils__soundhelper_sta[sh],id) //Return it to the stack
-    call SaveSoundHandle(SoundUtils__st, soundRef, id, s) //Save it to hashtable
-    if not s__SoundUtils__soundhelper_looping[sh] then
+    call s__Stack_push(s__SoundUtils___soundhelper_sta[sh],id) //Return it to the stack
+    call SaveSoundHandle(SoundUtils___st, soundRef, id, s) //Save it to hashtable
+    if not s__SoundUtils___soundhelper_looping[sh] then
         //soundrecycler only exists for non-looping sounds
-        set sr=(LoadInteger(SoundUtils__rt, soundRef, id))
-        call s__SoundUtils__soundrecycler_deallocate(sr) //Destroy recycler helper
+        set sr=(LoadInteger(SoundUtils___rt, soundRef, id))
+        call s__SoundUtils___soundrecycler_deallocate(sr) //Destroy recycler helper
     endif
     return true
 endfunction
 
-function SoundUtils__Recycle takes nothing returns nothing
-    local integer sr= ((s__TimerUtils__data[GetHandleId((GetExpiredTimer())) - TimerUtils__OFFSET])) // INLINED!!
-    local integer sh= (s__SoundUtils__soundrecycler_sh[sr])
-    local integer id= GetHandleId(s__SoundUtils__soundrecycler_s[sr])
+function SoundUtils___Recycle takes nothing returns nothing
+    local integer sr= ((s__TimerUtils___data[GetHandleId((GetExpiredTimer())) - TimerUtils___OFFSET])) // INLINED!!
+    local integer sh= (s__SoundUtils___soundrecycler_sh[sr])
+    local integer id= GetHandleId(s__SoundUtils___soundrecycler_s[sr])
     
-    call h__StopSound(s__SoundUtils__soundrecycler_s[sr], false, true) //Stop the sound
-    call s__Stack_push(s__SoundUtils__soundhelper_sta[sh],id) //Return it to the stack
-    call SaveSoundHandle(SoundUtils__st, (sh), id, s__SoundUtils__soundrecycler_s[sr]) //Save it to hashtable
-    call s__SoundUtils__soundrecycler_deallocate(sr) //Destroy recycler helper
+    call h__StopSound(s__SoundUtils___soundrecycler_s[sr], false, true) //Stop the sound
+    call s__Stack_push(s__SoundUtils___soundhelper_sta[sh],id) //Return it to the stack
+    call SaveSoundHandle(SoundUtils___st, (sh), id, s__SoundUtils___soundrecycler_s[sr]) //Save it to hashtable
+    call s__SoundUtils___soundrecycler_deallocate(sr) //Destroy recycler helper
 endfunction
 
-function SoundUtils__Run takes nothing returns nothing
-    local integer sr= ((s__TimerUtils__data[GetHandleId((GetExpiredTimer())) - TimerUtils__OFFSET])) // INLINED!!
-    local integer sh= (s__SoundUtils__soundrecycler_sh[sr])
+function SoundUtils___Run takes nothing returns nothing
+    local integer sr= ((s__TimerUtils___data[GetHandleId((GetExpiredTimer())) - TimerUtils___OFFSET])) // INLINED!!
+    local integer sh= (s__SoundUtils___soundrecycler_sh[sr])
     
-    if not s__SoundUtils__soundrecycler_stopped[sr] then
-        call StartSound(s__SoundUtils__soundrecycler_s[sr]) //Play sound here
+    if not s__SoundUtils___soundrecycler_stopped[sr] then
+        call StartSound(s__SoundUtils___soundrecycler_s[sr]) //Play sound here
     endif
-    if not s__SoundUtils__soundhelper_looping[sh] and not s__SoundUtils__soundrecycler_stopped[sr] then
-        call TimerStart(s__SoundUtils__soundrecycler_t[sr], s__SoundUtils__soundhelper_duration[sh] * 0.001, false, function SoundUtils__Recycle)
+    if not s__SoundUtils___soundhelper_looping[sh] and not s__SoundUtils___soundrecycler_stopped[sr] then
+        call TimerStart(s__SoundUtils___soundrecycler_t[sr], s__SoundUtils___soundhelper_duration[sh] * 0.001, false, function SoundUtils___Recycle)
     else
-        call s__SoundUtils__soundrecycler_deallocate(sr)
+        call s__SoundUtils___soundrecycler_deallocate(sr)
     endif
 endfunction
 
@@ -1525,18 +1526,18 @@ function RunSound takes integer soundRef returns sound
         return null
     endif
     //Check if the stack is empty
-    if (s__Stack_value[s__Stack_top[(s__SoundUtils__soundhelper_sta[sh])]]) == s__Stack_EMPTY then // INLINED!!
+    if (s__Stack_value[s__Stack_top[(s__SoundUtils___soundhelper_sta[sh])]]) == s__Stack_EMPTY then // INLINED!!
         //Create a new sound for the stack
-        set s=CreateSound(s__SoundUtils__soundhelper_fileName[sh], s__SoundUtils__soundhelper_looping[sh], s__SoundUtils__soundhelper_is3D[sh], s__SoundUtils__soundhelper_stopwhenoutofrange[sh], s__SoundUtils__soundhelper_fadeInRate[sh], s__SoundUtils__soundhelper_fadeOutRate[sh], s__SoundUtils__soundhelper_eaxSetting[sh])
+        set s=CreateSound(s__SoundUtils___soundhelper_fileName[sh], s__SoundUtils___soundhelper_looping[sh], s__SoundUtils___soundhelper_is3D[sh], s__SoundUtils___soundhelper_stopwhenoutofrange[sh], s__SoundUtils___soundhelper_fadeInRate[sh], s__SoundUtils___soundhelper_fadeOutRate[sh], s__SoundUtils___soundhelper_eaxSetting[sh])
         //Attach the type to the sound for future reference
-        call SaveInteger(SoundUtils__ht, 0, GetHandleId(s), (sh))
-        call SetSoundDuration(s, s__SoundUtils__soundhelper_duration[sh])
+        call SaveInteger(SoundUtils___ht, 0, GetHandleId(s), (sh))
+        call SetSoundDuration(s, s__SoundUtils___soundhelper_duration[sh])
         
         //Stuff that must be performed immediately upon creation of sounds
         call SetSoundChannel(s, 5)
         call SetSoundVolume(s, 127)
         call SetSoundPitch(s, 1.)
-        if s__SoundUtils__soundhelper_is3D[sh] then
+        if s__SoundUtils___soundhelper_is3D[sh] then
             //These are settings necessary for 3-D sounds to function properly
             //You can change them at will outside of this function
             call SetSoundDistances(s, 600., 10000.)
@@ -1546,24 +1547,24 @@ function RunSound takes integer soundRef returns sound
         endif
         
         //Start sound after a delay because it was created here
-        set sr=s__SoundUtils__soundrecycler_create(s , soundRef)
-        call TimerStart(s__SoundUtils__soundrecycler_t[sr], 0.001, false, function SoundUtils__Run)
+        set sr=s__SoundUtils___soundrecycler_create(s , soundRef)
+        call TimerStart(s__SoundUtils___soundrecycler_t[sr], 0.001, false, function SoundUtils___Run)
     else
         //Allocate a sound from the stack
-        set i=s__Stack_pop(s__SoundUtils__soundhelper_sta[sh])
-        if not HaveSavedHandle(SoundUtils__st, soundRef, i) then
+        set i=s__Stack_pop(s__SoundUtils___soundhelper_sta[sh])
+        if not HaveSavedHandle(SoundUtils___st, soundRef, i) then
             return null
         endif
-        set s=LoadSoundHandle(SoundUtils__st, soundRef, i)
-        call RemoveSavedInteger(SoundUtils__st, soundRef, i)
+        set s=LoadSoundHandle(SoundUtils___st, soundRef, i)
+        call RemoveSavedInteger(SoundUtils___st, soundRef, i)
         call SetSoundVolume(s, 127) //Start volume at max
         
         //Start it here since it wasn't created here
         call StartSound(s)
         //Recycle the sound in a timer callback after it's finished if nonlooping
-        if not s__SoundUtils__soundhelper_looping[sh] then
-            set sr=s__SoundUtils__soundrecycler_create(s , soundRef)
-            call TimerStart(s__SoundUtils__soundrecycler_t[sr], s__SoundUtils__soundhelper_duration[sh] * 0.001, false, function SoundUtils__Recycle)
+        if not s__SoundUtils___soundhelper_looping[sh] then
+            set sr=s__SoundUtils___soundrecycler_create(s , soundRef)
+            call TimerStart(s__SoundUtils___soundrecycler_t[sr], s__SoundUtils___soundhelper_duration[sh] * 0.001, false, function SoundUtils___Recycle)
         endif
     endif
     return s
@@ -1616,6 +1617,12 @@ function ShowMultiboard takes player whichPlayer returns nothing
     endif
 endfunction
 
+function HideMultiboard takes player whichPlayer returns nothing
+    if ( GetLocalPlayer() == whichPlayer ) then
+        call MultiboardDisplay(udg_Multiboard, false)
+    endif
+endfunction
+
 function ShowUI takes player whichPlayer returns nothing
     if ( GetLocalPlayer() == whichPlayer ) then
         call ShowInterface(true, 0.0)
@@ -1623,6 +1630,8 @@ function ShowUI takes player whichPlayer returns nothing
     endif
     if ( IsPlayerInForce(whichPlayer, udg_AirForce) ) then
         call ShowMultiboard(whichPlayer)
+    else
+        call HideMultiboard(whichPlayer)
     endif
 endfunction
 
@@ -1634,6 +1643,8 @@ function HideUI takes player whichPlayer returns nothing
     endif
     if ( IsPlayerInForce(whichPlayer, udg_AirForce) ) then
         call ShowMultiboard(whichPlayer)
+    else
+        call HideMultiboard(whichPlayer)
     endif
 endfunction
 
@@ -1650,6 +1661,9 @@ function UpdateGunship takes player whichPlayer returns nothing
     call SetUnitPosition(udg_Gunship[convertedPlayerId], x, y)
     call SetUnitFacing(udg_Gunship[convertedPlayerId], AngleBetweenCoordinatesDeg(x , y , cameraTargetX[playerId] , cameraTargetY[playerId]))
     call SetUnitFlyHeight(udg_Gunship[convertedPlayerId], z, 0.0)
+    if ( not IsUnitSelected(udg_Gunship[convertedPlayerId], whichPlayer) ) then
+        call SelectUnitForPlayerSingle(udg_Gunship[convertedPlayerId], whichPlayer)
+    endif
 endfunction
 
 function OrderGunshipAttack takes player whichPlayer returns nothing
@@ -1672,19 +1686,19 @@ function ZoomOut takes player whichPlayer returns nothing
 endfunction
 
 
-function Gunship__RegisterZoomEventsEnum takes nothing returns nothing
-    call TriggerRegisterPlayerEvent(Gunship__zoomInTrigger, GetEnumPlayer(), EVENT_PLAYER_ARROW_UP_DOWN)
-    call TriggerRegisterPlayerEvent(Gunship__zoomOutTrigger, GetEnumPlayer(), EVENT_PLAYER_ARROW_DOWN_DOWN)
-    call BlzTriggerRegisterPlayerKeyEvent(Gunship__speedUpTrigger, GetEnumPlayer(), OSKEY_ADD, 0, true)
-    call BlzTriggerRegisterPlayerKeyEvent(Gunship__speedDownTrigger, GetEnumPlayer(), OSKEY_SUBTRACT, 0, true)
-    call BlzTriggerRegisterPlayerKeyEvent(Gunship__nightVisionTrigger, GetEnumPlayer(), OSKEY_SPACE, 0, true)
+function Gunship___RegisterZoomEventsEnum takes nothing returns nothing
+    call TriggerRegisterPlayerEvent(Gunship___zoomInTrigger, GetEnumPlayer(), EVENT_PLAYER_ARROW_UP_DOWN)
+    call TriggerRegisterPlayerEvent(Gunship___zoomOutTrigger, GetEnumPlayer(), EVENT_PLAYER_ARROW_DOWN_DOWN)
+    call BlzTriggerRegisterPlayerKeyEvent(Gunship___speedUpTrigger, GetEnumPlayer(), OSKEY_ADD, 0, true)
+    call BlzTriggerRegisterPlayerKeyEvent(Gunship___speedDownTrigger, GetEnumPlayer(), OSKEY_SUBTRACT, 0, true)
+    call BlzTriggerRegisterPlayerKeyEvent(Gunship___nightVisionTrigger, GetEnumPlayer(), OSKEY_SPACE, 0, true)
 endfunction
 
-function Gunship__TriggerActionZoomIn takes nothing returns nothing
+function Gunship___TriggerActionZoomIn takes nothing returns nothing
     call ZoomIn(GetTriggerPlayer())
 endfunction
 
-function Gunship__TriggerActionZoomOut takes nothing returns nothing
+function Gunship___TriggerActionZoomOut takes nothing returns nothing
     call ZoomOut(GetTriggerPlayer())
 endfunction
 
@@ -1695,8 +1709,8 @@ function RotateCameraAround takes real degrees,real x,real y,player whichPlayer,
     endif
 endfunction
 
-function Gunship__TimerFunctionRotate takes nothing returns nothing
-    local integer playerId= LoadInteger(Gunship__h, GetHandleId(GetExpiredTimer()), 0)
+function Gunship___TimerFunctionRotate takes nothing returns nothing
+    local integer playerId= LoadInteger(Gunship___h, GetHandleId(GetExpiredTimer()), 0)
     local player whichPlayer= Player(playerId)
     local real duration= 20.0 - udg_GunshipSpeed[playerId + 1] * 0.01
     call SetCameraTargetControllerNoZForPlayer(whichPlayer, udg_Marker, 0, 0, false)
@@ -1714,15 +1728,15 @@ function RotateCameraAroundTarget takes player whichPlayer returns nothing
     local real remainingAngleDuration= remainingAngle / 360.0 * duration
     call SetCameraTargetControllerNoZForPlayer(whichPlayer, udg_Marker, 0, 0, false)
     call RotateCameraAround(remainingAngle , x , y , whichPlayer , remainingAngleDuration)
-    if ( Gunship__rotationTimer[playerId] == null ) then
-        set Gunship__rotationTimer[playerId]=CreateTimer()
-        call SaveInteger(Gunship__h, GetHandleId(Gunship__rotationTimer[playerId]), 0, playerId)
+    if ( Gunship___rotationTimer[playerId] == null ) then
+        set Gunship___rotationTimer[playerId]=CreateTimer()
+        call SaveInteger(Gunship___h, GetHandleId(Gunship___rotationTimer[playerId]), 0, playerId)
     endif
-    call PauseTimer(Gunship__rotationTimer[playerId])
-    call TimerStart(Gunship__rotationTimer[playerId], remainingAngleDuration - 1.0, true, function Gunship__TimerFunctionRotate)
+    call PauseTimer(Gunship___rotationTimer[playerId])
+    call TimerStart(Gunship___rotationTimer[playerId], remainingAngleDuration - 1.0, true, function Gunship___TimerFunctionRotate)
 endfunction
 
-function Gunship__TriggerActionSpeedUp takes nothing returns nothing
+function Gunship___TriggerActionSpeedUp takes nothing returns nothing
     local integer convertedPlayerId= GetConvertedPlayerId(GetTriggerPlayer())
     if ( udg_GunshipSpeed[convertedPlayerId] < 190.0 ) then
         set udg_GunshipSpeed[convertedPlayerId]=udg_GunshipSpeed[convertedPlayerId] + 20.0
@@ -1731,7 +1745,7 @@ function Gunship__TriggerActionSpeedUp takes nothing returns nothing
     endif
 endfunction
 
-function Gunship__TriggerActionSpeedDown takes nothing returns nothing
+function Gunship___TriggerActionSpeedDown takes nothing returns nothing
     local integer convertedPlayerId= GetConvertedPlayerId(GetTriggerPlayer())
     if ( udg_GunshipSpeed[convertedPlayerId] > 20.0 ) then
         set udg_GunshipSpeed[convertedPlayerId]=udg_GunshipSpeed[convertedPlayerId] - 20.0
@@ -1740,7 +1754,7 @@ function Gunship__TriggerActionSpeedDown takes nothing returns nothing
     endif
 endfunction
 
-function Gunship__NightVision takes player whichPlayer returns nothing
+function Gunship___NightVision takes player whichPlayer returns nothing
     local real red= 0.0
     local real green= 100.0
     local real blue= 0.0
@@ -1761,29 +1775,29 @@ function Gunship__NightVision takes player whichPlayer returns nothing
     endif
 endfunction
 
-function Gunship__NoNightVision takes player whichPlayer returns nothing
+function Gunship___NoNightVision takes player whichPlayer returns nothing
     if ( whichPlayer == GetLocalPlayer() ) then
         call DisplayCineFilter(false)
     endif
 endfunction
 
-function Gunship__TriggerActionNightVision takes nothing returns nothing
+function Gunship___TriggerActionNightVision takes nothing returns nothing
     local integer convertedPlayerId= GetConvertedPlayerId(GetTriggerPlayer())
     set udg_GunshipNightVision[convertedPlayerId]=not udg_GunshipNightVision[convertedPlayerId]
     if ( udg_GunshipNightVision[convertedPlayerId] ) then
-        call Gunship__NightVision(GetTriggerPlayer())
+        call Gunship___NightVision(GetTriggerPlayer())
     else
-        call Gunship__NoNightVision(GetTriggerPlayer())
+        call Gunship___NoNightVision(GetTriggerPlayer())
     endif
 endfunction
 
 function InitGunship takes nothing returns nothing
-    call ForForce(udg_AirForce, function Gunship__RegisterZoomEventsEnum)
-    call TriggerAddAction(Gunship__zoomInTrigger, function Gunship__TriggerActionZoomIn)
-    call TriggerAddAction(Gunship__zoomOutTrigger, function Gunship__TriggerActionZoomOut)
-    call TriggerAddAction(Gunship__speedUpTrigger, function Gunship__TriggerActionSpeedUp)
-    call TriggerAddAction(Gunship__speedDownTrigger, function Gunship__TriggerActionSpeedDown)
-    call TriggerAddAction(Gunship__nightVisionTrigger, function Gunship__TriggerActionNightVision)
+    call ForForce(udg_AirForce, function Gunship___RegisterZoomEventsEnum)
+    call TriggerAddAction(Gunship___zoomInTrigger, function Gunship___TriggerActionZoomIn)
+    call TriggerAddAction(Gunship___zoomOutTrigger, function Gunship___TriggerActionZoomOut)
+    call TriggerAddAction(Gunship___speedUpTrigger, function Gunship___TriggerActionSpeedUp)
+    call TriggerAddAction(Gunship___speedDownTrigger, function Gunship___TriggerActionSpeedDown)
+    call TriggerAddAction(Gunship___nightVisionTrigger, function Gunship___TriggerActionNightVision)
 endfunction
 
 
@@ -1917,7 +1931,7 @@ endfunction
 
 
 function MySoundsVariables_init takes nothing returns nothing
-    set SOUND_MACHINEGUN=(s__SoundUtils__soundhelper_create((("Units\\Human\\GyroCopter\\GyrocopterImpactHit1.wav" ) ) , ( ( 750 ) ) , ( ( false ) ) , ( ( true) ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
+    set SOUND_MACHINEGUN=(s__SoundUtils___soundhelper_create((("Units\\Human\\GyroCopter\\GyrocopterImpactHit1.wav" ) ) , ( ( 750 ) ) , ( ( false ) ) , ( ( true) ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
     //During the map loading, the sound will be initialized ; do not forget that the twin slash is compulsory for the path of an object in Jass (contrary to GUI, where 1 slash is enough).
     //To sum up, you will get something like this
     //Set the  SOUND_MACHINEGUN  to be a Define Sound (blabla)
@@ -1993,6 +2007,17 @@ function CreateUnitsForPlayer1 takes nothing returns nothing
 endfunction
 
 //===========================================================================
+function CreateBuildingsForPlayer2 takes nothing returns nothing
+    local player p= Player(2)
+    local unit u
+    local integer unitID
+    local trigger t
+    local real life
+
+    set u=BlzCreateUnitWithSkin(p, 'hcas', - 1408.0, 384.0, 270.000, 'hcas')
+endfunction
+
+//===========================================================================
 function CreateUnitsForPlayer2 takes nothing returns nothing
     local player p= Player(2)
     local unit u
@@ -2001,15 +2026,26 @@ function CreateUnitsForPlayer2 takes nothing returns nothing
     local real life
 
     set u=BlzCreateUnitWithSkin(p, 'zcso', - 1505.8, 69.1, 264.340, 'zcso')
-    set u=BlzCreateUnitWithSkin(p, 'hpea', - 1520.6, 362.8, 185.092, 'hpea')
-    set u=BlzCreateUnitWithSkin(p, 'hpea', - 1463.6, 364.6, 0.582, 'hpea')
-    set u=BlzCreateUnitWithSkin(p, 'hpea', - 1362.8, 371.1, 349.727, 'hpea')
-    set u=BlzCreateUnitWithSkin(p, 'hpea', - 1298.2, 376.4, 113.679, 'hpea')
-    set u=BlzCreateUnitWithSkin(p, 'hpea', - 1414.1, 396.2, 28.587, 'hpea')
-    set gg_unit_H003_0112=BlzCreateUnitWithSkin(p, 'H003', - 1436.0, 256.5, 270.000, 'H003')
+    set u=BlzCreateUnitWithSkin(p, 'hpea', - 1543.0, 641.9, 185.092, 'hpea')
+    set u=BlzCreateUnitWithSkin(p, 'hpea', - 1448.0, 633.8, 0.582, 'hpea')
+    set u=BlzCreateUnitWithSkin(p, 'hpea', - 1254.0, 662.3, 349.727, 'hpea')
+    set u=BlzCreateUnitWithSkin(p, 'hpea', - 1629.0, 637.8, 113.679, 'hpea')
+    set u=BlzCreateUnitWithSkin(p, 'hpea', - 1336.0, 658.2, 28.587, 'hpea')
+    set gg_unit_H003_0112=BlzCreateUnitWithSkin(p, 'H003', - 1650.6, 73.8, 270.000, 'H003')
     set u=BlzCreateUnitWithSkin(p, 'zcso', - 1404.8, 65.6, 264.340, 'zcso')
     set u=BlzCreateUnitWithSkin(p, 'zcso', - 1303.7, 58.5, 264.340, 'zcso')
     set u=BlzCreateUnitWithSkin(p, 'zcso', - 1224.7, 58.6, 264.340, 'zcso')
+endfunction
+
+//===========================================================================
+function CreateBuildingsForPlayer3 takes nothing returns nothing
+    local player p= Player(3)
+    local unit u
+    local integer unitID
+    local trigger t
+    local real life
+
+    set u=BlzCreateUnitWithSkin(p, 'hcas', 0.0, 384.0, 270.000, 'hcas')
 endfunction
 
 //===========================================================================
@@ -2020,12 +2056,12 @@ function CreateUnitsForPlayer3 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u=BlzCreateUnitWithSkin(p, 'hpea', 3.8, 339.8, 284.917, 'hpea')
-    set u=BlzCreateUnitWithSkin(p, 'hpea', 97.5, 329.3, 46.276, 'hpea')
+    set u=BlzCreateUnitWithSkin(p, 'hpea', - 199.6, 676.4, 284.917, 'hpea')
+    set u=BlzCreateUnitWithSkin(p, 'hpea', - 60.7, 693.2, 46.276, 'hpea')
     set u=BlzCreateUnitWithSkin(p, 'hpea', 232.3, 323.5, 177.160, 'hpea')
-    set u=BlzCreateUnitWithSkin(p, 'hpea', 162.4, 334.7, 130.236, 'hpea')
-    set u=BlzCreateUnitWithSkin(p, 'hpea', 297.2, 328.9, 300.749, 'hpea')
-    set gg_unit_H003_0111=BlzCreateUnitWithSkin(p, 'H003', 41.9, 232.1, 270.000, 'H003')
+    set u=BlzCreateUnitWithSkin(p, 'hpea', 86.1, 659.6, 130.236, 'hpea')
+    set u=BlzCreateUnitWithSkin(p, 'hpea', 230.7, 678.8, 300.749, 'hpea')
+    set gg_unit_H003_0111=BlzCreateUnitWithSkin(p, 'H003', - 320.8, 279.9, 270.000, 'H003')
     set u=BlzCreateUnitWithSkin(p, 'zcso', - 47.1, 66.6, 264.340, 'zcso')
     set u=BlzCreateUnitWithSkin(p, 'zcso', 54.0, 63.1, 264.340, 'zcso')
     set u=BlzCreateUnitWithSkin(p, 'zcso', 155.1, 56.0, 264.340, 'zcso')
@@ -2175,6 +2211,8 @@ endfunction
 function CreatePlayerBuildings takes nothing returns nothing
     call CreateBuildingsForPlayer0()
     call CreateBuildingsForPlayer1()
+    call CreateBuildingsForPlayer2()
+    call CreateBuildingsForPlayer3()
 endfunction
 
 //===========================================================================
@@ -2257,7 +2295,7 @@ function Trig_Start_Func001A takes nothing returns nothing
     endif
 endfunction
 
-function Trig_Start_Func004Func001Func002A takes nothing returns nothing
+function Trig_Start_Func004Func001Func004A takes nothing returns nothing
     call RemoveUnit(GetEnumUnit())
 endfunction
 
@@ -2271,17 +2309,18 @@ endfunction
 function Trig_Start_Func004A takes nothing returns nothing
     if ( Trig_Start_Func004Func001C() ) then
         set bj_wantDestroyGroup=true
-        call ForGroupBJ(GetUnitsOfPlayerAll(GetEnumPlayer()), function Trig_Start_Func004Func001Func002A)
+        call ForGroupBJ(GetUnitsOfPlayerAll(GetEnumPlayer()), function Trig_Start_Func004Func001Func004A)
     else
-        call DoNothing()
+        call SetPlayerStateBJ(GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD, 750)
+        call SetPlayerStateBJ(GetEnumPlayer(), PLAYER_STATE_RESOURCE_LUMBER, 750)
     endif
 endfunction
 
-function Trig_Start_Func013A takes nothing returns nothing
+function Trig_Start_Func014A takes nothing returns nothing
     call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), GetConvertedPlayerId(GetEnumPlayer()), udg_MultiboardRow, true, true)
 endfunction
 
-function Trig_Start_Func050A takes nothing returns nothing
+function Trig_Start_Func051A takes nothing returns nothing
     call ShowMultiboard(GetEnumPlayer())
     call RotateCameraAroundTarget(GetEnumPlayer())
 endfunction
@@ -2292,6 +2331,7 @@ function Trig_Start_Actions takes nothing returns nothing
     call SelectUnitForPlayerSingle(gg_unit_H003_0111, Player(3))
     call ForForce(udg_GroundForce, function Trig_Start_Func004A)
     call ShowUnitHide(udg_Marker)
+    call DisplayTextToForce(udg_AirForce, "TRIGSTR_081")
     call DisplayTextToForce(udg_GroundForce, "TRIGSTR_034")
     call StartTimerBJ(udg_VictoryTimer, false, 360.00)
     call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "TRIGSTR_031")
@@ -2299,7 +2339,7 @@ function Trig_Start_Actions takes nothing returns nothing
     set udg_Multiboard=GetLastCreatedMultiboard()
     call MultiboardSetItemWidthBJ(GetLastCreatedMultiboard(), 0, 0, 12.00)
     set udg_MultiboardRow=1
-    call ForForce(udg_AirForce, function Trig_Start_Func013A)
+    call ForForce(udg_AirForce, function Trig_Start_Func014A)
     set udg_MultiboardRow=( udg_MultiboardRow + 1 )
     call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, true, false)
     call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, "TRIGSTR_072")
@@ -2336,7 +2376,7 @@ function Trig_Start_Actions takes nothing returns nothing
     call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 2, udg_MultiboardRow, "TRIGSTR_076")
     call MultiboardMinimizeBJ(false, GetLastCreatedMultiboard())
     call MultiboardDisplayBJ(false, GetLastCreatedMultiboard())
-    call ForForce(udg_AirForce, function Trig_Start_Func050A)
+    call ForForce(udg_AirForce, function Trig_Start_Func051A)
 endfunction
 
 //===========================================================================
@@ -2797,26 +2837,63 @@ function InitTrig_Victory_Air_Force takes nothing returns nothing
 endfunction
 
 //===========================================================================
-// Trigger: Victory Ground Force
+// Trigger: Victory Ground Force Kill
 //===========================================================================
-function Trig_Victory_Ground_Force_Func001A takes nothing returns nothing
-    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_030")
+function Trig_Victory_Ground_Force_Kill_Conditions takes nothing returns boolean
+    if ( not ( IsPlayerInForce(GetOwningPlayer(GetTriggerUnit()), udg_AirForce) == true ) ) then
+        return false
+    endif
+    if ( not ( GetPlayerUnitCount(Player(0), false) == 0 ) ) then
+        return false
+    endif
+    if ( not ( GetPlayerUnitCount(Player(1), false) == 0 ) ) then
+        return false
+    endif
+    return true
 endfunction
 
-function Trig_Victory_Ground_Force_Func002A takes nothing returns nothing
+function Trig_Victory_Ground_Force_Kill_Func002A takes nothing returns nothing
+    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_080")
+endfunction
+
+function Trig_Victory_Ground_Force_Kill_Func003A takes nothing returns nothing
     call CustomVictoryBJ(GetEnumPlayer(), true, true)
 endfunction
 
-function Trig_Victory_Ground_Force_Actions takes nothing returns nothing
-    call ForForce(udg_AirForce, function Trig_Victory_Ground_Force_Func001A)
-    call ForForce(udg_GroundForce, function Trig_Victory_Ground_Force_Func002A)
+function Trig_Victory_Ground_Force_Kill_Actions takes nothing returns nothing
+    call ForForce(udg_AirForce, function Trig_Victory_Ground_Force_Kill_Func002A)
+    call ForForce(udg_GroundForce, function Trig_Victory_Ground_Force_Kill_Func003A)
 endfunction
 
 //===========================================================================
-function InitTrig_Victory_Ground_Force takes nothing returns nothing
-    set gg_trg_Victory_Ground_Force=CreateTrigger()
-    call TriggerRegisterTimerExpireEventBJ(gg_trg_Victory_Ground_Force, udg_VictoryTimer)
-    call TriggerAddAction(gg_trg_Victory_Ground_Force, function Trig_Victory_Ground_Force_Actions)
+function InitTrig_Victory_Ground_Force_Kill takes nothing returns nothing
+    set gg_trg_Victory_Ground_Force_Kill=CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_Victory_Ground_Force_Kill, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_Victory_Ground_Force_Kill, Condition(function Trig_Victory_Ground_Force_Kill_Conditions))
+    call TriggerAddAction(gg_trg_Victory_Ground_Force_Kill, function Trig_Victory_Ground_Force_Kill_Actions)
+endfunction
+
+//===========================================================================
+// Trigger: Victory Ground Force Time
+//===========================================================================
+function Trig_Victory_Ground_Force_Time_Func001A takes nothing returns nothing
+    call CustomDefeatBJ(GetEnumPlayer(), "TRIGSTR_030")
+endfunction
+
+function Trig_Victory_Ground_Force_Time_Func002A takes nothing returns nothing
+    call CustomVictoryBJ(GetEnumPlayer(), true, true)
+endfunction
+
+function Trig_Victory_Ground_Force_Time_Actions takes nothing returns nothing
+    call ForForce(udg_AirForce, function Trig_Victory_Ground_Force_Time_Func001A)
+    call ForForce(udg_GroundForce, function Trig_Victory_Ground_Force_Time_Func002A)
+endfunction
+
+//===========================================================================
+function InitTrig_Victory_Ground_Force_Time takes nothing returns nothing
+    set gg_trg_Victory_Ground_Force_Time=CreateTrigger()
+    call TriggerRegisterTimerExpireEventBJ(gg_trg_Victory_Ground_Force_Time, udg_VictoryTimer)
+    call TriggerAddAction(gg_trg_Victory_Ground_Force_Time, function Trig_Victory_Ground_Force_Time_Actions)
 endfunction
 
 //===========================================================================
@@ -2835,7 +2912,8 @@ function InitCustomTriggers takes nothing returns nothing
     call InitTrig_Escape_UI()
     call InitTrig_Change_Target()
     call InitTrig_Victory_Air_Force()
-    call InitTrig_Victory_Ground_Force()
+    call InitTrig_Victory_Ground_Force_Kill()
+    call InitTrig_Victory_Ground_Force_Time()
 endfunction
 
 //===========================================================================
@@ -2955,10 +3033,10 @@ function main takes nothing returns nothing
     call CreateAllUnits()
     call InitBlizzard()
 
-call ExecuteFunc("jasshelper__initstructs484338609")
-call ExecuteFunc("TimerUtils__init")
-call ExecuteFunc("CameraPosSync__Init")
-set SOUND_MACHINEGUN=(s__SoundUtils__soundhelper_create((("Units\\Human\\GyroCopter\\GyrocopterImpactHit1.wav" ) ) , ( ( 750 ) ) , ( ( false ) ) , ( ( true) ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
+call ExecuteFunc("jasshelper__initstructs485102218")
+call ExecuteFunc("TimerUtils___init")
+call ExecuteFunc("CameraPosSync___Init")
+set SOUND_MACHINEGUN=(s__SoundUtils___soundhelper_create((("Units\\Human\\GyroCopter\\GyrocopterImpactHit1.wav" ) ) , ( ( 750 ) ) , ( ( false ) ) , ( ( true) ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
 
     call InitGlobals()
     call InitCustomTriggers()
@@ -3008,25 +3086,25 @@ local integer this=f__arg_this
             endloop
    return true
 endfunction
-function sa__SoundUtils__soundrecycler_onDestroy takes nothing returns boolean
+function sa__SoundUtils___soundrecycler_onDestroy takes nothing returns boolean
 local integer this=f__arg_this
-        call RemoveSavedInteger(SoundUtils__rt, s__SoundUtils__soundrecycler_sh[this], GetHandleId(s__SoundUtils__soundrecycler_s[this]))
-        call ReleaseTimer(s__SoundUtils__soundrecycler_t[this])
+        call RemoveSavedInteger(SoundUtils___rt, s__SoundUtils___soundrecycler_sh[this], GetHandleId(s__SoundUtils___soundrecycler_s[this]))
+        call ReleaseTimer(s__SoundUtils___soundrecycler_t[this])
    return true
 endfunction
-function sa___prototype32_SoundUtils__HookStopSound takes nothing returns boolean
-    call SoundUtils__HookStopSound(f__arg_sound1,f__arg_boolean1,f__arg_boolean2)
+function sa___prototype32_SoundUtils___HookStopSound takes nothing returns boolean
+    call SoundUtils___HookStopSound(f__arg_sound1,f__arg_boolean1,f__arg_boolean2)
     return true
 endfunction
 
-function jasshelper__initstructs484338609 takes nothing returns nothing
+function jasshelper__initstructs485102218 takes nothing returns nothing
     set st__Stack_onDestroy=CreateTrigger()
     call TriggerAddCondition(st__Stack_onDestroy,Condition( function sa__Stack_onDestroy))
-    set st__SoundUtils__soundrecycler_onDestroy=CreateTrigger()
-    call TriggerAddCondition(st__SoundUtils__soundrecycler_onDestroy,Condition( function sa__SoundUtils__soundrecycler_onDestroy))
+    set st__SoundUtils___soundrecycler_onDestroy=CreateTrigger()
+    call TriggerAddCondition(st__SoundUtils___soundrecycler_onDestroy,Condition( function sa__SoundUtils___soundrecycler_onDestroy))
     set st___prototype32[1]=CreateTrigger()
-    call TriggerAddAction(st___prototype32[1],function sa___prototype32_SoundUtils__HookStopSound)
-    call TriggerAddCondition(st___prototype32[1],Condition(function sa___prototype32_SoundUtils__HookStopSound))
+    call TriggerAddAction(st___prototype32[1],function sa___prototype32_SoundUtils___HookStopSound)
+    call TriggerAddCondition(st___prototype32[1],Condition(function sa___prototype32_SoundUtils___HookStopSound))
 
 
 
