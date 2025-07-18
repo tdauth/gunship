@@ -59,7 +59,7 @@ real array cameraTargetY
 real array cameraTargetZ
 real array cameraDistance
     
-trigger CameraPosSync___syncTrigger= CreateTrigger()
+trigger CameraPosSync__syncTrigger= CreateTrigger()
 //endglobals from CameraPosSync
 //globals from SoundUtils:
 constant boolean LIBRARY_SoundUtils=true
@@ -70,13 +70,13 @@ hashtable SoundUtils__kt= InitHashtable()
 //endglobals from SoundUtils
 //globals from Gunship:
 constant boolean LIBRARY_Gunship=true
-hashtable Gunship___h= InitHashtable()
-timer array Gunship___rotationTimer
-trigger Gunship___zoomInTrigger= CreateTrigger()
-trigger Gunship___zoomOutTrigger= CreateTrigger()
-trigger Gunship___speedUpTrigger= CreateTrigger()
-trigger Gunship___speedDownTrigger= CreateTrigger()
-trigger Gunship___nightVisionTrigger= CreateTrigger()
+hashtable Gunship__h= InitHashtable()
+timer array Gunship__rotationTimer
+trigger Gunship__zoomInTrigger= CreateTrigger()
+trigger Gunship__zoomOutTrigger= CreateTrigger()
+trigger Gunship__speedUpTrigger= CreateTrigger()
+trigger Gunship__speedDownTrigger= CreateTrigger()
+trigger Gunship__nightVisionTrigger= CreateTrigger()
 //endglobals from Gunship
     // User-defined
 unit array udg_Gunship
@@ -1233,11 +1233,11 @@ endfunction
 //library CameraPosSync:
 
 
-function CameraPosSync___RegisterSyncEventEnum takes nothing returns nothing
-    call BlzTriggerRegisterPlayerSyncEvent(CameraPosSync___syncTrigger, GetEnumPlayer(), CameraPosSync_PREFIX, false)
+function CameraPosSync__RegisterSyncEventEnum takes nothing returns nothing
+    call BlzTriggerRegisterPlayerSyncEvent(CameraPosSync__syncTrigger, GetEnumPlayer(), CameraPosSync_PREFIX, false)
 endfunction
 
-function CameraPosSync___TriggerActionSync takes nothing returns nothing
+function CameraPosSync__TriggerActionSync takes nothing returns nothing
     local string data= BlzGetTriggerSyncData()
     local integer playerId= GetPlayerId(GetTriggerPlayer())
     if ( StringStartsWith(data , "SourceX_") ) then
@@ -1257,7 +1257,7 @@ function CameraPosSync___TriggerActionSync takes nothing returns nothing
     endif
 endfunction
 
-function CameraPosSync___SyncEnum takes nothing returns nothing
+function CameraPosSync__SyncEnum takes nothing returns nothing
     if ( GetLocalPlayer() == GetEnumPlayer() ) then
         call BlzSendSyncData(CameraPosSync_PREFIX, "SourceX_" + R2S(GetCameraEyePositionX()))
         call BlzSendSyncData(CameraPosSync_PREFIX, "SourceY_" + R2S(GetCameraEyePositionY()))
@@ -1269,14 +1269,14 @@ function CameraPosSync___SyncEnum takes nothing returns nothing
     endif
 endfunction
 
-function CameraPosSync___TimerFunctionSync takes nothing returns nothing
-    call ForForce(GetPlayersAll(), function CameraPosSync___SyncEnum)
+function CameraPosSync__TimerFunctionSync takes nothing returns nothing
+    call ForForce(GetPlayersAll(), function CameraPosSync__SyncEnum)
 endfunction
 
-function CameraPosSync___Init takes nothing returns nothing
-    call ForForce(GetPlayersAll(), function CameraPosSync___RegisterSyncEventEnum)
-    call TriggerAddAction(CameraPosSync___syncTrigger, function CameraPosSync___TriggerActionSync)
-    call TimerStart(CreateTimer(), CameraPosSync_SYNC_INTERVAL, true, function CameraPosSync___TimerFunctionSync)
+function CameraPosSync__Init takes nothing returns nothing
+    call ForForce(GetPlayersAll(), function CameraPosSync__RegisterSyncEventEnum)
+    call TriggerAddAction(CameraPosSync__syncTrigger, function CameraPosSync__TriggerActionSync)
+    call TimerStart(CreateTimer(), CameraPosSync_SYNC_INTERVAL, true, function CameraPosSync__TimerFunctionSync)
 endfunction
 
 
@@ -1672,19 +1672,19 @@ function ZoomOut takes player whichPlayer returns nothing
 endfunction
 
 
-function Gunship___RegisterZoomEventsEnum takes nothing returns nothing
-    call TriggerRegisterPlayerEvent(Gunship___zoomInTrigger, GetEnumPlayer(), EVENT_PLAYER_ARROW_UP_DOWN)
-    call TriggerRegisterPlayerEvent(Gunship___zoomOutTrigger, GetEnumPlayer(), EVENT_PLAYER_ARROW_DOWN_DOWN)
-    call BlzTriggerRegisterPlayerKeyEvent(Gunship___speedUpTrigger, GetEnumPlayer(), OSKEY_ADD, 0, true)
-    call BlzTriggerRegisterPlayerKeyEvent(Gunship___speedDownTrigger, GetEnumPlayer(), OSKEY_SUBTRACT, 0, true)
-    call BlzTriggerRegisterPlayerKeyEvent(Gunship___nightVisionTrigger, GetEnumPlayer(), OSKEY_SPACE, 0, true)
+function Gunship__RegisterZoomEventsEnum takes nothing returns nothing
+    call TriggerRegisterPlayerEvent(Gunship__zoomInTrigger, GetEnumPlayer(), EVENT_PLAYER_ARROW_UP_DOWN)
+    call TriggerRegisterPlayerEvent(Gunship__zoomOutTrigger, GetEnumPlayer(), EVENT_PLAYER_ARROW_DOWN_DOWN)
+    call BlzTriggerRegisterPlayerKeyEvent(Gunship__speedUpTrigger, GetEnumPlayer(), OSKEY_ADD, 0, true)
+    call BlzTriggerRegisterPlayerKeyEvent(Gunship__speedDownTrigger, GetEnumPlayer(), OSKEY_SUBTRACT, 0, true)
+    call BlzTriggerRegisterPlayerKeyEvent(Gunship__nightVisionTrigger, GetEnumPlayer(), OSKEY_SPACE, 0, true)
 endfunction
 
-function Gunship___TriggerActionZoomIn takes nothing returns nothing
+function Gunship__TriggerActionZoomIn takes nothing returns nothing
     call ZoomIn(GetTriggerPlayer())
 endfunction
 
-function Gunship___TriggerActionZoomOut takes nothing returns nothing
+function Gunship__TriggerActionZoomOut takes nothing returns nothing
     call ZoomOut(GetTriggerPlayer())
 endfunction
 
@@ -1695,8 +1695,8 @@ function RotateCameraAround takes real degrees,real x,real y,player whichPlayer,
     endif
 endfunction
 
-function Gunship___TimerFunctionRotate takes nothing returns nothing
-    local integer playerId= LoadInteger(Gunship___h, GetHandleId(GetExpiredTimer()), 0)
+function Gunship__TimerFunctionRotate takes nothing returns nothing
+    local integer playerId= LoadInteger(Gunship__h, GetHandleId(GetExpiredTimer()), 0)
     local player whichPlayer= Player(playerId)
     local real duration= 20.0 - udg_GunshipSpeed[playerId + 1] * 0.01
     call SetCameraTargetControllerNoZForPlayer(whichPlayer, udg_Marker, 0, 0, false)
@@ -1714,29 +1714,33 @@ function RotateCameraAroundTarget takes player whichPlayer returns nothing
     local real remainingAngleDuration= remainingAngle / 360.0 * duration
     call SetCameraTargetControllerNoZForPlayer(whichPlayer, udg_Marker, 0, 0, false)
     call RotateCameraAround(remainingAngle , x , y , whichPlayer , remainingAngleDuration)
-    if ( Gunship___rotationTimer[playerId] == null ) then
-        set Gunship___rotationTimer[playerId]=CreateTimer()
-        call SaveInteger(Gunship___h, GetHandleId(Gunship___rotationTimer[playerId]), 0, playerId)
+    if ( Gunship__rotationTimer[playerId] == null ) then
+        set Gunship__rotationTimer[playerId]=CreateTimer()
+        call SaveInteger(Gunship__h, GetHandleId(Gunship__rotationTimer[playerId]), 0, playerId)
     endif
-    call PauseTimer(Gunship___rotationTimer[playerId])
-    call TimerStart(Gunship___rotationTimer[playerId], remainingAngleDuration - 1.0, true, function Gunship___TimerFunctionRotate)
+    call PauseTimer(Gunship__rotationTimer[playerId])
+    call TimerStart(Gunship__rotationTimer[playerId], remainingAngleDuration - 1.0, true, function Gunship__TimerFunctionRotate)
 endfunction
 
-function Gunship___TriggerActionSpeedUp takes nothing returns nothing
+function Gunship__TriggerActionSpeedUp takes nothing returns nothing
     local integer convertedPlayerId= GetConvertedPlayerId(GetTriggerPlayer())
-    set udg_GunshipSpeed[convertedPlayerId]=udg_GunshipSpeed[convertedPlayerId] + 20.0
-    set udg_GunshipSpeed[convertedPlayerId]=RMinBJ(170.0, udg_GunshipSpeed[convertedPlayerId])
-    call RotateCameraAroundTarget(GetTriggerPlayer())
+    if ( udg_GunshipSpeed[convertedPlayerId] < 190.0 ) then
+        set udg_GunshipSpeed[convertedPlayerId]=udg_GunshipSpeed[convertedPlayerId] + 20.0
+        set udg_GunshipSpeed[convertedPlayerId]=RMinBJ(190.0, udg_GunshipSpeed[convertedPlayerId])
+        call RotateCameraAroundTarget(GetTriggerPlayer())
+    endif
 endfunction
 
-function Gunship___TriggerActionSpeedDown takes nothing returns nothing
+function Gunship__TriggerActionSpeedDown takes nothing returns nothing
     local integer convertedPlayerId= GetConvertedPlayerId(GetTriggerPlayer())
-    set udg_GunshipSpeed[convertedPlayerId]=udg_GunshipSpeed[convertedPlayerId] - 20.0
-    set udg_GunshipSpeed[convertedPlayerId]=RMaxBJ(20.0, udg_GunshipSpeed[convertedPlayerId])
-    call RotateCameraAroundTarget(GetTriggerPlayer())
+    if ( udg_GunshipSpeed[convertedPlayerId] > 20.0 ) then
+        set udg_GunshipSpeed[convertedPlayerId]=udg_GunshipSpeed[convertedPlayerId] - 20.0
+        set udg_GunshipSpeed[convertedPlayerId]=RMaxBJ(20.0, udg_GunshipSpeed[convertedPlayerId])
+        call RotateCameraAroundTarget(GetTriggerPlayer())
+    endif
 endfunction
 
-function Gunship___NightVision takes player whichPlayer returns nothing
+function Gunship__NightVision takes player whichPlayer returns nothing
     local real red= 0.0
     local real green= 100.0
     local real blue= 0.0
@@ -1757,29 +1761,29 @@ function Gunship___NightVision takes player whichPlayer returns nothing
     endif
 endfunction
 
-function Gunship___NoNightVision takes player whichPlayer returns nothing
+function Gunship__NoNightVision takes player whichPlayer returns nothing
     if ( whichPlayer == GetLocalPlayer() ) then
         call DisplayCineFilter(false)
     endif
 endfunction
 
-function Gunship___TriggerActionNightVision takes nothing returns nothing
+function Gunship__TriggerActionNightVision takes nothing returns nothing
     local integer convertedPlayerId= GetConvertedPlayerId(GetTriggerPlayer())
     set udg_GunshipNightVision[convertedPlayerId]=not udg_GunshipNightVision[convertedPlayerId]
     if ( udg_GunshipNightVision[convertedPlayerId] ) then
-        call Gunship___NightVision(GetTriggerPlayer())
+        call Gunship__NightVision(GetTriggerPlayer())
     else
-        call Gunship___NoNightVision(GetTriggerPlayer())
+        call Gunship__NoNightVision(GetTriggerPlayer())
     endif
 endfunction
 
 function InitGunship takes nothing returns nothing
-    call ForForce(udg_AirForce, function Gunship___RegisterZoomEventsEnum)
-    call TriggerAddAction(Gunship___zoomInTrigger, function Gunship___TriggerActionZoomIn)
-    call TriggerAddAction(Gunship___zoomOutTrigger, function Gunship___TriggerActionZoomOut)
-    call TriggerAddAction(Gunship___speedUpTrigger, function Gunship___TriggerActionSpeedUp)
-    call TriggerAddAction(Gunship___speedDownTrigger, function Gunship___TriggerActionSpeedDown)
-    call TriggerAddAction(Gunship___nightVisionTrigger, function Gunship___TriggerActionNightVision)
+    call ForForce(udg_AirForce, function Gunship__RegisterZoomEventsEnum)
+    call TriggerAddAction(Gunship__zoomInTrigger, function Gunship__TriggerActionZoomIn)
+    call TriggerAddAction(Gunship__zoomOutTrigger, function Gunship__TriggerActionZoomOut)
+    call TriggerAddAction(Gunship__speedUpTrigger, function Gunship__TriggerActionSpeedUp)
+    call TriggerAddAction(Gunship__speedDownTrigger, function Gunship__TriggerActionSpeedDown)
+    call TriggerAddAction(Gunship__nightVisionTrigger, function Gunship__TriggerActionNightVision)
 endfunction
 
 
@@ -2951,9 +2955,9 @@ function main takes nothing returns nothing
     call CreateAllUnits()
     call InitBlizzard()
 
-call ExecuteFunc("jasshelper__initstructs484078625")
+call ExecuteFunc("jasshelper__initstructs484338609")
 call ExecuteFunc("TimerUtils__init")
-call ExecuteFunc("CameraPosSync___Init")
+call ExecuteFunc("CameraPosSync__Init")
 set SOUND_MACHINEGUN=(s__SoundUtils__soundhelper_create((("Units\\Human\\GyroCopter\\GyrocopterImpactHit1.wav" ) ) , ( ( 750 ) ) , ( ( false ) ) , ( ( true) ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
 
     call InitGlobals()
@@ -3015,7 +3019,7 @@ function sa___prototype32_SoundUtils__HookStopSound takes nothing returns boolea
     return true
 endfunction
 
-function jasshelper__initstructs484078625 takes nothing returns nothing
+function jasshelper__initstructs484338609 takes nothing returns nothing
     set st__Stack_onDestroy=CreateTrigger()
     call TriggerAddCondition(st__Stack_onDestroy,Condition( function sa__Stack_onDestroy))
     set st__SoundUtils__soundrecycler_onDestroy=CreateTrigger()
