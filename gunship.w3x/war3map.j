@@ -59,7 +59,7 @@ real array cameraTargetY
 real array cameraTargetZ
 real array cameraDistance
     
-trigger CameraPosSync__syncTrigger= CreateTrigger()
+trigger CameraPosSync___syncTrigger= CreateTrigger()
 //endglobals from CameraPosSync
 //globals from SoundUtils:
 constant boolean LIBRARY_SoundUtils=true
@@ -70,13 +70,13 @@ hashtable SoundUtils__kt= InitHashtable()
 //endglobals from SoundUtils
 //globals from Gunship:
 constant boolean LIBRARY_Gunship=true
-hashtable Gunship__h= InitHashtable()
-timer array Gunship__rotationTimer
-trigger Gunship__zoomInTrigger= CreateTrigger()
-trigger Gunship__zoomOutTrigger= CreateTrigger()
-trigger Gunship__speedUpTrigger= CreateTrigger()
-trigger Gunship__speedDownTrigger= CreateTrigger()
-trigger Gunship__nightVisionTrigger= CreateTrigger()
+hashtable Gunship___h= InitHashtable()
+timer array Gunship___rotationTimer
+trigger Gunship___zoomInTrigger= CreateTrigger()
+trigger Gunship___zoomOutTrigger= CreateTrigger()
+trigger Gunship___speedUpTrigger= CreateTrigger()
+trigger Gunship___speedDownTrigger= CreateTrigger()
+trigger Gunship___nightVisionTrigger= CreateTrigger()
 //endglobals from Gunship
     // User-defined
 unit array udg_Gunship
@@ -102,6 +102,7 @@ multiboard udg_Multiboard= null
 string udg_TmpString
 unit udg_Marker= null
 real array udg_GunshipSpeed
+integer udg_MultiboardRow= 0
 
     // Generated
 trigger gg_trg_Initialization= null
@@ -1232,11 +1233,11 @@ endfunction
 //library CameraPosSync:
 
 
-function CameraPosSync__RegisterSyncEventEnum takes nothing returns nothing
-    call BlzTriggerRegisterPlayerSyncEvent(CameraPosSync__syncTrigger, GetEnumPlayer(), CameraPosSync_PREFIX, false)
+function CameraPosSync___RegisterSyncEventEnum takes nothing returns nothing
+    call BlzTriggerRegisterPlayerSyncEvent(CameraPosSync___syncTrigger, GetEnumPlayer(), CameraPosSync_PREFIX, false)
 endfunction
 
-function CameraPosSync__TriggerActionSync takes nothing returns nothing
+function CameraPosSync___TriggerActionSync takes nothing returns nothing
     local string data= BlzGetTriggerSyncData()
     local integer playerId= GetPlayerId(GetTriggerPlayer())
     if ( StringStartsWith(data , "SourceX_") ) then
@@ -1256,7 +1257,7 @@ function CameraPosSync__TriggerActionSync takes nothing returns nothing
     endif
 endfunction
 
-function CameraPosSync__SyncEnum takes nothing returns nothing
+function CameraPosSync___SyncEnum takes nothing returns nothing
     if ( GetLocalPlayer() == GetEnumPlayer() ) then
         call BlzSendSyncData(CameraPosSync_PREFIX, "SourceX_" + R2S(GetCameraEyePositionX()))
         call BlzSendSyncData(CameraPosSync_PREFIX, "SourceY_" + R2S(GetCameraEyePositionY()))
@@ -1268,14 +1269,14 @@ function CameraPosSync__SyncEnum takes nothing returns nothing
     endif
 endfunction
 
-function CameraPosSync__TimerFunctionSync takes nothing returns nothing
-    call ForForce(GetPlayersAll(), function CameraPosSync__SyncEnum)
+function CameraPosSync___TimerFunctionSync takes nothing returns nothing
+    call ForForce(GetPlayersAll(), function CameraPosSync___SyncEnum)
 endfunction
 
-function CameraPosSync__Init takes nothing returns nothing
-    call ForForce(GetPlayersAll(), function CameraPosSync__RegisterSyncEventEnum)
-    call TriggerAddAction(CameraPosSync__syncTrigger, function CameraPosSync__TriggerActionSync)
-    call TimerStart(CreateTimer(), CameraPosSync_SYNC_INTERVAL, true, function CameraPosSync__TimerFunctionSync)
+function CameraPosSync___Init takes nothing returns nothing
+    call ForForce(GetPlayersAll(), function CameraPosSync___RegisterSyncEventEnum)
+    call TriggerAddAction(CameraPosSync___syncTrigger, function CameraPosSync___TriggerActionSync)
+    call TimerStart(CreateTimer(), CameraPosSync_SYNC_INTERVAL, true, function CameraPosSync___TimerFunctionSync)
 endfunction
 
 
@@ -1609,11 +1610,19 @@ function DisplayInfoText takes player whichPlayer returns nothing
     //call DisplayTextToPlayer(whichPlayer, 0.0, 0.0, GetInfoText(whichPlayer))
 endfunction
 
+function ShowMultiboard takes player whichPlayer returns nothing
+    if ( GetLocalPlayer() == whichPlayer ) then
+        call MultiboardDisplay(udg_Multiboard, true)
+    endif
+endfunction
+
 function ShowUI takes player whichPlayer returns nothing
     if ( GetLocalPlayer() == whichPlayer ) then
         call ShowInterface(true, 0.0)
         call BlzHideCinematicPanels(false)
-        call MultiboardDisplay(udg_Multiboard, true)
+    endif
+    if ( IsPlayerInForce(whichPlayer, udg_AirForce) ) then
+        call ShowMultiboard(whichPlayer)
     endif
 endfunction
 
@@ -1622,7 +1631,9 @@ function HideUI takes player whichPlayer returns nothing
         call ShowInterface(false, 0.0)
         call BlzHideCinematicPanels(true)
         call EnableUserControl(true)
-        call MultiboardDisplay(udg_Multiboard, true)
+    endif
+    if ( IsPlayerInForce(whichPlayer, udg_AirForce) ) then
+        call ShowMultiboard(whichPlayer)
     endif
 endfunction
 
@@ -1661,19 +1672,19 @@ function ZoomOut takes player whichPlayer returns nothing
 endfunction
 
 
-function Gunship__RegisterZoomEventsEnum takes nothing returns nothing
-    call TriggerRegisterPlayerEvent(Gunship__zoomInTrigger, GetEnumPlayer(), EVENT_PLAYER_ARROW_UP_DOWN)
-    call TriggerRegisterPlayerEvent(Gunship__zoomOutTrigger, GetEnumPlayer(), EVENT_PLAYER_ARROW_DOWN_DOWN)
-    call BlzTriggerRegisterPlayerKeyEvent(Gunship__speedUpTrigger, GetEnumPlayer(), OSKEY_SHIFT, 0, true)
-    call BlzTriggerRegisterPlayerKeyEvent(Gunship__speedDownTrigger, GetEnumPlayer(), OSKEY_CONTROL, 0, true)
-    call BlzTriggerRegisterPlayerKeyEvent(Gunship__nightVisionTrigger, GetEnumPlayer(), OSKEY_SPACE, 0, true)
+function Gunship___RegisterZoomEventsEnum takes nothing returns nothing
+    call TriggerRegisterPlayerEvent(Gunship___zoomInTrigger, GetEnumPlayer(), EVENT_PLAYER_ARROW_UP_DOWN)
+    call TriggerRegisterPlayerEvent(Gunship___zoomOutTrigger, GetEnumPlayer(), EVENT_PLAYER_ARROW_DOWN_DOWN)
+    call BlzTriggerRegisterPlayerKeyEvent(Gunship___speedUpTrigger, GetEnumPlayer(), OSKEY_ADD, 0, true)
+    call BlzTriggerRegisterPlayerKeyEvent(Gunship___speedDownTrigger, GetEnumPlayer(), OSKEY_SUBTRACT, 0, true)
+    call BlzTriggerRegisterPlayerKeyEvent(Gunship___nightVisionTrigger, GetEnumPlayer(), OSKEY_SPACE, 0, true)
 endfunction
 
-function Gunship__TriggerActionZoomIn takes nothing returns nothing
+function Gunship___TriggerActionZoomIn takes nothing returns nothing
     call ZoomIn(GetTriggerPlayer())
 endfunction
 
-function Gunship__TriggerActionZoomOut takes nothing returns nothing
+function Gunship___TriggerActionZoomOut takes nothing returns nothing
     call ZoomOut(GetTriggerPlayer())
 endfunction
 
@@ -1684,8 +1695,8 @@ function RotateCameraAround takes real degrees,real x,real y,player whichPlayer,
     endif
 endfunction
 
-function Gunship__TimerFunctionRotate takes nothing returns nothing
-    local integer playerId= LoadInteger(Gunship__h, GetHandleId(GetExpiredTimer()), 0)
+function Gunship___TimerFunctionRotate takes nothing returns nothing
+    local integer playerId= LoadInteger(Gunship___h, GetHandleId(GetExpiredTimer()), 0)
     local player whichPlayer= Player(playerId)
     local real duration= 20.0 - udg_GunshipSpeed[playerId + 1] * 0.01
     call SetCameraTargetControllerNoZForPlayer(whichPlayer, udg_Marker, 0, 0, false)
@@ -1695,32 +1706,37 @@ endfunction
 
 function RotateCameraAroundTarget takes player whichPlayer returns nothing
     local integer playerId= GetPlayerId(whichPlayer)
+    local real x= GetUnitX(udg_Marker)
+    local real y= GetUnitY(udg_Marker)
+    local real angle= AngleBetweenCoordinatesDeg(x , y , cameraEyeX[playerId] , cameraEyeY[playerId])
+    local real remainingAngle= 360.0 - angle
     local real duration= 20.0 - udg_GunshipSpeed[GetConvertedPlayerId(whichPlayer)] * 0.01
+    local real remainingAngleDuration= remainingAngle / 360.0 * duration
     call SetCameraTargetControllerNoZForPlayer(whichPlayer, udg_Marker, 0, 0, false)
-    call RotateCameraAround(360.0 , GetUnitX(udg_Marker) , GetUnitY(udg_Marker) , whichPlayer , duration)
-    if ( Gunship__rotationTimer[playerId] == null ) then
-        set Gunship__rotationTimer[playerId]=CreateTimer()
-        call SaveInteger(Gunship__h, GetHandleId(Gunship__rotationTimer[playerId]), 0, playerId)
+    call RotateCameraAround(remainingAngle , x , y , whichPlayer , remainingAngleDuration)
+    if ( Gunship___rotationTimer[playerId] == null ) then
+        set Gunship___rotationTimer[playerId]=CreateTimer()
+        call SaveInteger(Gunship___h, GetHandleId(Gunship___rotationTimer[playerId]), 0, playerId)
     endif
-    call PauseTimer(Gunship__rotationTimer[playerId])
-    call TimerStart(Gunship__rotationTimer[playerId], duration, true, function Gunship__TimerFunctionRotate)
+    call PauseTimer(Gunship___rotationTimer[playerId])
+    call TimerStart(Gunship___rotationTimer[playerId], remainingAngleDuration - 1.0, true, function Gunship___TimerFunctionRotate)
 endfunction
 
-function Gunship__TriggerActionSpeedUp takes nothing returns nothing
+function Gunship___TriggerActionSpeedUp takes nothing returns nothing
     local integer convertedPlayerId= GetConvertedPlayerId(GetTriggerPlayer())
     set udg_GunshipSpeed[convertedPlayerId]=udg_GunshipSpeed[convertedPlayerId] + 20.0
     set udg_GunshipSpeed[convertedPlayerId]=RMinBJ(170.0, udg_GunshipSpeed[convertedPlayerId])
     call RotateCameraAroundTarget(GetTriggerPlayer())
 endfunction
 
-function Gunship__TriggerActionSpeedDown takes nothing returns nothing
+function Gunship___TriggerActionSpeedDown takes nothing returns nothing
     local integer convertedPlayerId= GetConvertedPlayerId(GetTriggerPlayer())
     set udg_GunshipSpeed[convertedPlayerId]=udg_GunshipSpeed[convertedPlayerId] - 20.0
     set udg_GunshipSpeed[convertedPlayerId]=RMaxBJ(20.0, udg_GunshipSpeed[convertedPlayerId])
     call RotateCameraAroundTarget(GetTriggerPlayer())
 endfunction
 
-function Gunship__NightVision takes player whichPlayer returns nothing
+function Gunship___NightVision takes player whichPlayer returns nothing
     local real red= 0.0
     local real green= 100.0
     local real blue= 0.0
@@ -1741,29 +1757,29 @@ function Gunship__NightVision takes player whichPlayer returns nothing
     endif
 endfunction
 
-function Gunship__NoNightVision takes player whichPlayer returns nothing
+function Gunship___NoNightVision takes player whichPlayer returns nothing
     if ( whichPlayer == GetLocalPlayer() ) then
         call DisplayCineFilter(false)
     endif
 endfunction
 
-function Gunship__TriggerActionNightVision takes nothing returns nothing
+function Gunship___TriggerActionNightVision takes nothing returns nothing
     local integer convertedPlayerId= GetConvertedPlayerId(GetTriggerPlayer())
     set udg_GunshipNightVision[convertedPlayerId]=not udg_GunshipNightVision[convertedPlayerId]
     if ( udg_GunshipNightVision[convertedPlayerId] ) then
-        call Gunship__NightVision(GetTriggerPlayer())
+        call Gunship___NightVision(GetTriggerPlayer())
     else
-        call Gunship__NoNightVision(GetTriggerPlayer())
+        call Gunship___NoNightVision(GetTriggerPlayer())
     endif
 endfunction
 
 function InitGunship takes nothing returns nothing
-    call ForForce(udg_AirForce, function Gunship__RegisterZoomEventsEnum)
-    call TriggerAddAction(Gunship__zoomInTrigger, function Gunship__TriggerActionZoomIn)
-    call TriggerAddAction(Gunship__zoomOutTrigger, function Gunship__TriggerActionZoomOut)
-    call TriggerAddAction(Gunship__speedUpTrigger, function Gunship__TriggerActionSpeedUp)
-    call TriggerAddAction(Gunship__speedDownTrigger, function Gunship__TriggerActionSpeedDown)
-    call TriggerAddAction(Gunship__nightVisionTrigger, function Gunship__TriggerActionNightVision)
+    call ForForce(udg_AirForce, function Gunship___RegisterZoomEventsEnum)
+    call TriggerAddAction(Gunship___zoomInTrigger, function Gunship___TriggerActionZoomIn)
+    call TriggerAddAction(Gunship___zoomOutTrigger, function Gunship___TriggerActionZoomOut)
+    call TriggerAddAction(Gunship___speedUpTrigger, function Gunship___TriggerActionSpeedUp)
+    call TriggerAddAction(Gunship___speedDownTrigger, function Gunship___TriggerActionSpeedDown)
+    call TriggerAddAction(Gunship___nightVisionTrigger, function Gunship___TriggerActionNightVision)
 endfunction
 
 
@@ -1862,6 +1878,7 @@ function InitGlobals takes nothing returns nothing
         set i=i + 1
     endloop
 
+    set udg_MultiboardRow=0
 endfunction
 
 //***************************************************************************
@@ -2256,7 +2273,12 @@ function Trig_Start_Func004A takes nothing returns nothing
     endif
 endfunction
 
-function Trig_Start_Func032A takes nothing returns nothing
+function Trig_Start_Func013A takes nothing returns nothing
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), GetConvertedPlayerId(GetEnumPlayer()), udg_MultiboardRow, true, true)
+endfunction
+
+function Trig_Start_Func050A takes nothing returns nothing
+    call ShowMultiboard(GetEnumPlayer())
     call RotateCameraAroundTarget(GetEnumPlayer())
 endfunction
 
@@ -2269,30 +2291,48 @@ function Trig_Start_Actions takes nothing returns nothing
     call DisplayTextToForce(udg_GroundForce, "TRIGSTR_034")
     call StartTimerBJ(udg_VictoryTimer, false, 360.00)
     call CreateTimerDialogBJ(GetLastCreatedTimerBJ(), "TRIGSTR_031")
-    call CreateMultiboardBJ(2, 5, "TRIGSTR_052")
+    call CreateMultiboardBJ(CountPlayersInForceBJ(udg_AirForce), 7, "TRIGSTR_052")
     set udg_Multiboard=GetLastCreatedMultiboard()
     call MultiboardSetItemWidthBJ(GetLastCreatedMultiboard(), 0, 0, 12.00)
-    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 1, 1, true, true)
-    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 2, 1, true, true)
-    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 1, 2, true, false)
-    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 1, 2, "TRIGSTR_055")
-    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 2, 2, true, false)
-    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 2, 2, "TRIGSTR_057")
-    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 1, 3, true, false)
-    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 1, 3, "TRIGSTR_056")
-    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 2, 3, true, false)
-    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 2, 3, "TRIGSTR_058")
-    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 1, 4, true, false)
-    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 1, 4, "TRIGSTR_068")
-    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 2, 4, true, false)
-    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 2, 4, "TRIGSTR_069")
-    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 1, 5, true, false)
-    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 1, 5, "TRIGSTR_070")
-    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 2, 5, true, false)
-    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 2, 5, "TRIGSTR_071")
+    set udg_MultiboardRow=1
+    call ForForce(udg_AirForce, function Trig_Start_Func013A)
+    set udg_MultiboardRow=( udg_MultiboardRow + 1 )
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, true, false)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, "TRIGSTR_072")
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 2, udg_MultiboardRow, true, false)
+    set udg_MultiboardRow=( udg_MultiboardRow + 1 )
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, true, false)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, "TRIGSTR_055")
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 2, udg_MultiboardRow, true, false)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 2, udg_MultiboardRow, "TRIGSTR_057")
+    set udg_MultiboardRow=( udg_MultiboardRow + 1 )
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, true, false)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, "TRIGSTR_056")
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 2, udg_MultiboardRow, true, false)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 2, udg_MultiboardRow, "TRIGSTR_058")
+    set udg_MultiboardRow=( udg_MultiboardRow + 1 )
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, true, false)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, "TRIGSTR_068")
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 2, udg_MultiboardRow, true, false)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 2, udg_MultiboardRow, "TRIGSTR_069")
+    set udg_MultiboardRow=( udg_MultiboardRow + 1 )
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, true, false)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, "TRIGSTR_078")
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 2, udg_MultiboardRow, true, false)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 2, udg_MultiboardRow, "TRIGSTR_079")
+    set udg_MultiboardRow=( udg_MultiboardRow + 1 )
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, true, false)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, "TRIGSTR_070")
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 2, udg_MultiboardRow, true, false)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 2, udg_MultiboardRow, "TRIGSTR_071")
+    set udg_MultiboardRow=( udg_MultiboardRow + 1 )
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, true, false)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 1, udg_MultiboardRow, "TRIGSTR_075")
+    call MultiboardSetItemStyleBJ(GetLastCreatedMultiboard(), 2, udg_MultiboardRow, true, false)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 2, udg_MultiboardRow, "TRIGSTR_076")
     call MultiboardMinimizeBJ(false, GetLastCreatedMultiboard())
-    call MultiboardDisplayBJ(true, GetLastCreatedMultiboard())
-    call ForForce(udg_AirForce, function Trig_Start_Func032A)
+    call MultiboardDisplayBJ(false, GetLastCreatedMultiboard())
+    call ForForce(udg_AirForce, function Trig_Start_Func050A)
 endfunction
 
 //===========================================================================
@@ -2396,9 +2436,11 @@ function Trig_Update_Multiboards_Func001A takes nothing returns nothing
         call MultiboardSetItemValueBJ(udg_Multiboard, GetConvertedPlayerId(GetEnumPlayer()), 1, GetUnitName(udg_Gunship[GetConvertedPlayerId(GetEnumPlayer())]))
         set udg_TmpString=(BlzGetAbilityIcon(GetUnitTypeId(udg_Gunship[GetConvertedPlayerId((GetEnumPlayer()))]))) // INLINED!!
         call MultiboardSetItemIconBJ(udg_Multiboard, GetConvertedPlayerId(GetEnumPlayer()), 1, udg_TmpString)
+        call MultiboardSetItemValueBJ(udg_Multiboard, GetConvertedPlayerId(GetEnumPlayer()), 2, R2SW(udg_GunshipSpeed[GetConvertedPlayerId(GetEnumPlayer())], 1, 2))
     else
         call MultiboardSetItemValueBJ(udg_Multiboard, GetConvertedPlayerId(GetEnumPlayer()), 1, "TRIGSTR_064")
         call MultiboardSetItemIconBJ(udg_Multiboard, GetConvertedPlayerId(GetEnumPlayer()), 1, "ReplaceableTextures\\WorldEditUI\\Editor-Random-Unit.blp")
+        call MultiboardSetItemValueBJ(udg_Multiboard, GetConvertedPlayerId(GetEnumPlayer()), 2, "TRIGSTR_074")
     endif
 endfunction
 
@@ -2410,7 +2452,7 @@ endfunction
 function InitTrig_Update_Multiboards takes nothing returns nothing
     set gg_trg_Update_Multiboards=CreateTrigger()
     call TriggerRegisterTimerEventSingle(gg_trg_Update_Multiboards, 0.00)
-    call TriggerRegisterTimerEventPeriodic(gg_trg_Update_Multiboards, 2.00)
+    call TriggerRegisterTimerEventPeriodic(gg_trg_Update_Multiboards, 1.00)
     call TriggerAddAction(gg_trg_Update_Multiboards, function Trig_Update_Multiboards_Actions)
 endfunction
 
@@ -2909,9 +2951,9 @@ function main takes nothing returns nothing
     call CreateAllUnits()
     call InitBlizzard()
 
-call ExecuteFunc("jasshelper__initstructs482455015")
+call ExecuteFunc("jasshelper__initstructs484078625")
 call ExecuteFunc("TimerUtils__init")
-call ExecuteFunc("CameraPosSync__Init")
+call ExecuteFunc("CameraPosSync___Init")
 set SOUND_MACHINEGUN=(s__SoundUtils__soundhelper_create((("Units\\Human\\GyroCopter\\GyrocopterImpactHit1.wav" ) ) , ( ( 750 ) ) , ( ( false ) ) , ( ( true) ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
 
     call InitGlobals()
@@ -2973,7 +3015,7 @@ function sa___prototype32_SoundUtils__HookStopSound takes nothing returns boolea
     return true
 endfunction
 
-function jasshelper__initstructs482455015 takes nothing returns nothing
+function jasshelper__initstructs484078625 takes nothing returns nothing
     set st__Stack_onDestroy=CreateTrigger()
     call TriggerAddCondition(st__Stack_onDestroy,Condition( function sa__Stack_onDestroy))
     set st__SoundUtils__soundrecycler_onDestroy=CreateTrigger()
