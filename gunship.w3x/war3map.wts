@@ -5,7 +5,7 @@ Player 1
 
 STRING 3
 {
-Gunship
+Gunship 1.0
 }
 
 STRING 4
@@ -143,7 +143,7 @@ Gunships
 
 STRING 55
 {
-Left Mouse:
+Left Mouse (pressed):
 }
 
 STRING 56
@@ -188,5 +188,48 @@ Gunship
 STRING 64
 {
 -
+}
+
+STRING 65
+{
+Gunship 1.0
+}
+
+STRING 66
+{
+by Baradé
+}
+
+STRING 67
+{
+- Air Force: Destroy all ground forces before the time expires.
+- Ground Force: Hide and survive the air attacks until the time expires.
+
+Gunship Controls:
+- Left Mouse: Fire
+- Right Mouse: Change Weapon.
+- Escape: Hide/show UI.
+- Right Arrow: Heat Vision on/off.
+- Up/Down Arrow: Zoom in/out.
+}
+
+STRING 68
+{
+Escape:
+}
+
+STRING 69
+{
+Hide/show UI
+}
+
+STRING 70
+{
+Shift/Control:
+}
+
+STRING 71
+{
+Speed up/down
 }
 
